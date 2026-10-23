@@ -1,0 +1,42 @@
+[
+  {
+    "title": "The problem",
+    "seconds": 19.530794,
+    "narration": "Small software agencies prepare client proposals across documents, emails, and amendments. A proposal can look ready while missing an attachment or making an unsupported promise. FollowThrough helps the proposal owner catch those gaps before submission. This walkthrough uses clearly fictional client and company information."
+  },
+  {
+    "title": "Real NVIDIA inference on Nebius",
+    "seconds": 24.157732,
+    "narration": "In Sources, Analyze with NVIDIA calls NVIDIA Nemotron three Nano on Nebius Token Factory. This screen shows a successful live analysis. The model proposes requirements and a deadline. Application code locates exact quotations in the original text. A person reviews the interpretation. The guided demo is explicitly fixture based; live failures never become synthetic success."
+  },
+  {
+    "title": "Evidence before promises",
+    "seconds": 17.935873,
+    "narration": "Each requirement stays beside its source. Approved company evidence supplies conservative, verbatim draft excerpts. These drafts require relevance review. The proposal owner confirms the answers and deadline. Missing inputs can be assigned to an owner, but finishing a task does not approve an answer."
+  },
+  {
+    "title": "Catch the amendment",
+    "seconds": 16.71415,
+    "narration": "Now the client changes the delivery plan and adds a mandatory security workbook. FollowThrough preserves the earlier source, shows the changed requirement, and invalidates the old package approval. The affected answer needs fresh review while unaffected reviewed answers are preserved."
+  },
+  {
+    "title": "Block an unsupported commitment",
+    "seconds": 17.818005,
+    "narration": "Here an answer claims ISO twenty seven thousand and one certification, but it has no supporting evidence. The application flags it as unsupported and blocks approval. A person must provide evidence, correct the claim, or record an explicit owner exception. The system cannot invent a certificate."
+  },
+  {
+    "title": "Approve the corrected revision",
+    "seconds": 18.194059,
+    "narration": "The corrected package includes the new attachment and a truthful certification disclosure. Approval binds this exact revision and its content hash. The exported ZIP contains a client facing Word proposal, separate internal review information, and attachments. Export does not submit anything externally."
+  },
+  {
+    "title": "Submission needs evidence",
+    "seconds": 15.883673,
+    "narration": "The user reports external submission, then reviews a matching receipt. Acknowledgement is tracked separately from approval and from winning the contract. Receipt authenticity is not independently verified. An unrelated opportunity receipt is rejected by the workflow checks."
+  },
+  {
+    "title": "Measured scope and honest limits",
+    "seconds": 19.843673,
+    "narration": "FollowThrough passed eleven automated checks and six small fictional live NVIDIA smoke examples. Those results do not establish production accuracy or customer impact. This release is a local test build with no OCR or team hosting. The goal is a proposal that a person can inspect and approve, with the evidence kept beside every decision."
+  }
+]

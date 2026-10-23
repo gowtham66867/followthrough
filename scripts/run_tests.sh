@@ -12,4 +12,6 @@ elif [ -n "${HERMES_PYTHON:-}" ]; then
 else
   exec_python=python3
 fi
-"$exec_python" -m pytest tests "$@"
+for test_file in tests/test_*.py; do
+  "$exec_python" -m pytest -c /dev/null --rootdir=. -p no:cacheprovider "$test_file" "$@"
+done
