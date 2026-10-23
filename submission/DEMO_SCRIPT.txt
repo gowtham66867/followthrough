@@ -1,0 +1,22 @@
+Target duration: under three minutes. Show actual app states. Fictional client and company data are labelled on screen. Name the model and Nebius aloud.
+
+0:00–0:20 — Problem and audience
+Small software agencies respond to client RFPs across documents, emails and amendments. A proposal can look ready while missing an attachment or making an unsupported promise. FollowThrough helps the proposal owner catch those gaps before submission.
+
+0:20–0:45 — Grounded interpretation
+Here is a fictional customer-portal RFP. In Sources, Analyze with NVIDIA calls NVIDIA Nemotron 3 Nano on Nebius Token Factory. Each proposed requirement quotes the source. Code locates the quotation; a person reviews the interpretation and deadline.
+
+0:45–1:10 — Evidence and preparation
+Company evidence is approved explicitly. Match approved evidence prepares verbatim excerpts. These are conservative drafts, not invented capability claims. I review each answer for relevance. Missing facts become tasks or recorded exceptions.
+
+1:10–1:40 — The amendment
+The client changes the delivery plan and adds a security workbook. The previous package approval is invalidated. Unaffected answers remain reviewed. A certification claim without evidence is blocked. We ask for the missing information rather than invent a certificate.
+
+1:40–2:05 — Review and export
+The corrected package requires review of changed requirements, a confirmed deadline and the required attachment. Approval binds this revision and content hash. The ZIP separates the client-facing DOCX from internal evidence and exceptions.
+
+2:05–2:25 — Submission evidence
+Approval is not submission. The user reports external submission and reviews a matching receipt separately. An unrelated receipt is rejected. Client acknowledgement is another state, not an award.
+
+2:25–2:50 — Proof and limits
+The app passed 11 automated checks and six small fictional live-model smoke cases. These are not customer validation or production accuracy results. This is a local test build with no OCR or multi-tenant hosting. The goal is a reviewable proposal, not unchecked autonomous commitments.

@@ -1,0 +1,6 @@
+fastapi>=0.111,<1
+uvicorn>=0.29,<0.32
+pydantic>=2.7,<3
+httpx>=0.28.1,<1
+PyYAML>=6,<7
+pdfplumber>=0.11,<0.13

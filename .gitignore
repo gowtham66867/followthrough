@@ -1,0 +1,10 @@
+.env
+config.yaml
+.data/
+build/
+frontend/dist/
+frontend/node_modules/
+__pycache__/
+.pytest_cache/
+*.sqlite3*
+gmail-tokens.json

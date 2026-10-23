@@ -1,0 +1,6 @@
+model: '' # Select an available nvidia/ model from your Nebius account.
+timezone: Asia/Kolkata
+gmail_client_id: ''
+gmail_redirect_uri: http://127.0.0.1:8787/api/gmail/callback
+request_timeout_seconds: 90
+enable_thinking: false # Optional model-specific chat-template setting; verified with Nemotron 3 Nano.

@@ -1,0 +1,44 @@
+Project name
+FollowThrough
+
+Tagline
+Catch missing requirements and unsupported promises before your proposal goes out.
+
+Track
+Best Apps and Agents
+
+Business problem
+Small software agencies reconcile RFPs, clarification emails, company evidence and client amendments manually. Missing a mandatory attachment or using an outdated delivery requirement can leave a proposal incomplete. Unsupported capability promises can create delivery risk. FollowThrough is a local review workspace for the person accountable for the final package.
+
+What it does
+Import selected PDF, DOCX or text sources. NVIDIA Nemotron 3 Nano on Nebius Token Factory extracts proposed requirements and deadlines. Application code anchors exact quotations, leaving interpretations and ambiguous dates for human review. Approved company evidence is matched into conservative verbatim drafts. Missing answers, attachments, stale evidence and unsupported text remain visible. Client amendments preserve source history and reopen review. Approval binds an exact package revision and content hash. Export includes a client-facing DOCX and separate internal review material. External submission, receipt evidence and acknowledgement remain separate states.
+
+How we built it
+React and Vite frontend, FastAPI backend, SQLite transactions, strict Pydantic schemas, bounded document parsing, and a deterministic proposal orchestrator. Nebius provides the real inference API; nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B interprets selected source text. No provider call is required for the explicitly labelled guided fixture walkthrough. Live analysis never falls back to fixtures.
+
+Why this is agentic
+The system moves work through extraction, evidence retrieval, gap identification, amendment review, approval and export while preserving state and audit history. The model proposes requirements; code enforces evidence and approval boundaries. We deliberately use lexical retrieval and verbatim evidence drafts rather than presenting unsupported prose as a completed proposal. No autonomous external submission is implemented.
+
+Testing
+11 automated checks passed in the development checkout, including two end-to-end proposal contracts with real SQLite and API calls. Six small fictional live NVIDIA examples passed schema, exact-quotation and keyword-based expected-requirement checks. These are smoke tests, not a claim of 95% production accuracy. The application source view was also tested through a live model call in the browser.
+
+Challenges
+Initial live requests returned extra fields, truncated responses and incorrect character offsets. We made the schema explicit, requested JSON, disabled unnecessary thinking for Nano extraction, and moved citation-offset calculation into code. Unknown or ambiguous quotations fail closed. Model omissions and semantic misinterpretation remain possible, so users review requirements and evidence relevance.
+
+Nebius and NVIDIA feedback
+Nebius's OpenAI-compatible HTTP API made integration straightforward. The model catalog endpoint successfully identified available NVIDIA models. Nemotron 3 Nano handled six small requirement-extraction cases with approximately 1 to 2 second latency after changing the inference configuration. Earlier reasoning-enabled requests consumed far more output budget and could truncate. Exact numeric citation offsets were unreliable; code-based quotation anchoring was more appropriate. The onboarding credit form initially did not load in the automated browser, and the emailed code arrived later. Credits were successfully redeemed. We would use this stack again for bounded extraction with deterministic validation and human review; these observations do not establish general model quality or throughput.
+
+Limitations
+Single-owner local test build, not a public multi-tenant service. No measured customer impact, contract-win improvement or time savings. No OCR, arbitrary spreadsheets, autonomous submission or legal-compliance guarantee. Evidence retrieval is lexical, so relevance is reviewed by a person. Gmail OAuth is optional and remains unverified; the main journey works with documents and pasted emails. Receipt authenticity is not independently verified. User exceptions are explicit and auditable. No real client documents are included in the demo.
+
+Future work
+Customer interviews, permissioned real-RFP pilots, broader labelled evaluation, better semantic evidence retrieval, and authenticated organization-scoped deployment before any public service exposure.
+
+Repository
+https://github.com/gowtham66867/followthrough
+
+Test build
+https://github.com/gowtham66867/followthrough/releases/latest
+
+Public YouTube demo URL
+REQUIRED BEFORE FINAL DEVPOST SUBMISSION: upload the prepared demo video to YouTube as public and insert its URL.

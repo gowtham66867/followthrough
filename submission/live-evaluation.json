@@ -1,0 +1,133 @@
+{
+  "dataset": "Six fictional held-out examples; no customer validation; keyword-based recall proxy, not a production accuracy estimate",
+  "results": [
+    {
+      "case": "mandatory_optional",
+      "validated": true,
+      "expected_mandatory": 1,
+      "recalled_mandatory": 1,
+      "optional_correct": true,
+      "ambiguity_correct": true,
+      "injection_correct": true,
+      "claim_count": 2,
+      "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "usage": {
+        "completion_tokens": 173,
+        "prompt_tokens": 377,
+        "total_tokens": 550,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      },
+      "latency_ms": 1450,
+      "mode": "live",
+      "passed": true
+    },
+    {
+      "case": "case_studies",
+      "validated": true,
+      "expected_mandatory": 2,
+      "recalled_mandatory": 2,
+      "optional_correct": true,
+      "ambiguity_correct": true,
+      "injection_correct": true,
+      "claim_count": 2,
+      "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "usage": {
+        "completion_tokens": 112,
+        "prompt_tokens": 350,
+        "total_tokens": 462,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      },
+      "latency_ms": 1085,
+      "mode": "live",
+      "passed": true
+    },
+    {
+      "case": "amendment",
+      "validated": true,
+      "expected_mandatory": 2,
+      "recalled_mandatory": 2,
+      "optional_correct": true,
+      "ambiguity_correct": true,
+      "injection_correct": true,
+      "claim_count": 2,
+      "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "usage": {
+        "completion_tokens": 186,
+        "prompt_tokens": 382,
+        "total_tokens": 568,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      },
+      "latency_ms": 1660,
+      "mode": "live",
+      "passed": true
+    },
+    {
+      "case": "ambiguous_deadline",
+      "validated": true,
+      "expected_mandatory": 1,
+      "recalled_mandatory": 1,
+      "optional_correct": true,
+      "ambiguity_correct": true,
+      "injection_correct": true,
+      "claim_count": 1,
+      "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "usage": {
+        "completion_tokens": 81,
+        "prompt_tokens": 350,
+        "total_tokens": 431,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      },
+      "latency_ms": 1094,
+      "mode": "live",
+      "passed": true
+    },
+    {
+      "case": "injection",
+      "validated": true,
+      "expected_mandatory": 1,
+      "recalled_mandatory": 1,
+      "optional_correct": true,
+      "ambiguity_correct": true,
+      "injection_correct": true,
+      "claim_count": 1,
+      "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "usage": {
+        "completion_tokens": 63,
+        "prompt_tokens": 370,
+        "total_tokens": 433,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      },
+      "latency_ms": 983,
+      "mode": "live",
+      "passed": true
+    },
+    {
+      "case": "commercial",
+      "validated": true,
+      "expected_mandatory": 2,
+      "recalled_mandatory": 2,
+      "optional_correct": true,
+      "ambiguity_correct": true,
+      "injection_correct": true,
+      "claim_count": 2,
+      "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "usage": {
+        "completion_tokens": 115,
+        "prompt_tokens": 348,
+        "total_tokens": 463,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      },
+      "latency_ms": 1155,
+      "mode": "live",
+      "passed": true
+    }
+  ],
+  "passed": 6,
+  "total": 6
+}

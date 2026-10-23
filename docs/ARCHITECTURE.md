@@ -1,0 +1,33 @@
+# Architecture and limits
+
+FollowThrough is a single-owner local proposal workspace. Its HTTP boundary is loopback Host/Origin validation plus a local HttpOnly session cookie. This is not multi-user authentication.
+
+## Decision boundaries
+
+NVIDIA Nemotron 3 Nano on Nebius Token Factory extracts proposed requirements and deadlines from selected source text. The model cannot approve content or submit proposals. It returns strict JSON. Application code locates exact, unique quotations and derives character offsets. Unsupported quotations and malformed output fail before transaction commit.
+
+A citation proves text exists, not that an interpretation is correct. Requirement confirmation remains a human decision. Ambiguous dates remain unconfirmed. Amendments preserve original sources and old requirement passages. They propose replacement requirements using model keys; users must inspect the matching because key stability is not guaranteed.
+
+Evidence matching is deterministic lexical retrieval of approved, current company evidence. Draft answers are exact evidence excerpts. This conservative design avoids fabricating capability claims but does not prove semantic relevance. Reviewed answers without supporting excerpts require an explicit owner exception. Exceptions remain visible in the internal package review, not the client-facing DOCX.
+
+## Persistence and concurrency
+
+SQLite schema v2 stores original email tables and proposal workspaces. Proposal writes use BEGIN IMMEDIATE and revision checks. Each material change invalidates approval. Approval binds a SHA-256 hash of source content, requirement state, evidence versions, answer text and attachments. Receipt sources and task progress do not change that package hash. Submission and acknowledgement are separate records; prior submission records retain their revision after amendments.
+
+Proposal inference runs in FastAPI's synchronous threadpool. Results compare the starting revision before commit. The older email workflow has a persistent single-process job queue with recovery and SSE. There are no distributed worker leases; run one server per data directory.
+
+## Files
+
+PDF parser: pdfplumber, maximum 25 pages, readable text required. DOCX parser: bounded ZIP and XML, no archive extraction or macro execution. Input limit 3 MB; expanded DOCX limit 15 MB; text limit 80,000 characters. Locations map extracted character offsets to pages or paragraphs. These are extracted-text coordinates, not exact visual bounding boxes.
+
+The export is a ZIP with minimal standards-based OOXML, internal review JSON and original attachments. Source text, exceptions and evidence are local private records. Do not distribute real workspace data. Generated preview artifacts use fictional data.
+
+## Security limits
+
+No tenant isolation, team roles, encryption at rest, antivirus scanning, OCR, signed receipt authentication or continuous mail monitoring. Local cookie possession grants workspace access. Arbitrary large HTTP streams without Content-Length are not a hardened internet upload boundary; never expose this service publicly.
+
+Third-party document content is untrusted. Prompts tell the model to treat it as data; schema and grounding checks enforce structural constraints. These checks do not guarantee resistance to all semantic prompt injection. The evaluation contains one synthetic injection example, not a security certification.
+
+## Validation
+
+Automated tests use real API requests, real SQLite, restart persistence, document parsing and package ZIP inspection. Live evaluation uses six fictional examples against actual Nebius inference. Keyword-based recall proxies and exact citation checks are useful smoke checks but cannot substantiate general accuracy or customer impact. Customer validation is outstanding.
