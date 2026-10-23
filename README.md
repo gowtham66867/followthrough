@@ -4,6 +4,8 @@ A local proposal-readiness assistant for small software agencies. It keeps clien
 
 **Hackathon MVP, not a production service.** Built with Nebius Token Factory and `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B`. No customer impact or contract-win claims have been measured.
 
+[Watch the 2:30 demo](https://www.youtube.com/watch?v=TGrqRwF3qm0) · [Download the test build](https://github.com/gowtham66867/followthrough/releases/tag/v0.2.0)
+
 ![Proposal workspace](submission/02-requirements.png)
 
 ## The business problem

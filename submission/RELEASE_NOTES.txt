@@ -8,7 +8,9 @@ Features: sourced requirements, PDF/DOCX/text import, approved company evidence,
 
 Validation: 9 standalone tests passed; 11 including development-only starter coverage. Six small fictional live NVIDIA smoke examples passed strict schema, citation and expected-keyword checks. No production accuracy or customer impact is claimed.
 
-The 2:30 narrated walkthrough is attached as followthrough-demo.mp4. It uses actual application captures and explicitly fictional client/company information.
+Public YouTube demo: https://www.youtube.com/watch?v=TGrqRwF3qm0
+
+The 2:30 narrated walkthrough is also attached as followthrough-demo.mp4. It uses actual application captures and explicitly fictional client/company information.
 
 Boundaries: single-owner local application, no OCR or public multi-tenant hosting. Evidence excerpts require human relevance review. Gmail OAuth is optional and unverified. External submission remains manual. Do not expose this app publicly through a tunnel.
 
