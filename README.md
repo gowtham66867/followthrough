@@ -4,9 +4,9 @@ A local proposal-readiness assistant for small software agencies. It keeps clien
 
 **Hackathon MVP, not a production service.** Built with Nebius Token Factory and `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B`. No customer impact or contract-win claims have been measured.
 
-[Watch the original 2:30 core-workflow demo](https://www.youtube.com/watch?v=TGrqRwF3qm0) · [Download the test build](https://github.com/gowtham66867/followthrough/releases/tag/v0.3.0)
+[Watch the original 2:30 core-workflow demo](https://www.youtube.com/watch?v=TGrqRwF3qm0) · [Download the test build](https://github.com/gowtham66867/followthrough/releases/tag/v0.4.0)
 
-![Proposal workspace](submission/02-requirements.png)
+![Amendment impact map](submission/16-amendment-impact-map.png)
 
 ## The business problem
 
@@ -71,6 +71,16 @@ To repeat these paid, synthetic-only checks deliberately:
 python scripts/validate_advanced.py --credentials /private/path/to/credentials.json
 ```
 
+## Impact map and final review
+
+**Before you submit** is the default proposal view. It groups deterministic blockers by source review, requirements, answers, evidence support, attachments, deadline and optional conflict review. Missing-input owners and documented exceptions are shown separately as advisory follow-ups. Every issue has a navigation target and next action; attachment actions preselect the required deliverable, owner actions open its task form, and deadline actions open the sourced date review. These checks are not a completeness, relevance or legal-compliance guarantee.
+
+**Impact map** traces each requirement through its original source, selected evidence records, proposal answer, required attachment, task owner and global package approval. Filter changed/amendment-added obligations or search by requirement/owner. Changed quotations appear beside their earlier wording and preserve both source links. Pending unanalyzed amendments explicitly show that impact mapping is incomplete. Links are derived from stored identifiers and model-proposed requirement keys, not an independently verified causal graph. Human review still determines amendment authority and semantic relevance.
+
+The map, action queue, approval, export and user-reported submission gate share the same backend readiness contract. Read-only projections do not change revisions or the package hash. An expired evidence record can block an old approval even when its content hash is unchanged. A completed owner task does not approve the answer or satisfy an attachment. A clear row does not approve the entire package.
+
+The fictional browser walkthrough verified: prepare and review answers, approve revision 20, add an amendment, observe approval reopening at revision 22, inspect changed delivery wording, and open an attachment import preselected to the missing workbook. Screenshots show [approved review](submission/15-final-review-approved.png), [amendment impact](submission/16-amendment-impact-map.png) and [blocked review](submission/17-final-review-blocked.png). These are demonstration artifacts, not customer outcome measurements.
+
 ## Walk through the proposal journey
 
 1. Load the fictional Northstar Customer Portal opportunity.
@@ -93,7 +103,7 @@ The export ZIP contains a client-facing `proposal.docx`, separate internal revie
 
 ## Validation
 
-- 11 standalone automated tests cover the proposal and original email workflows, including two integrated HTTP/SQLite contracts for semantic retrieval, conflict dispositions and multipage visual imports. Two additional starter tests exist only in the development checkout.
+- 13 standalone automated tests cover the proposal and original email workflows, including two integrated HTTP/SQLite contracts for semantic retrieval, conflict dispositions and multipage visual imports. Two additional starter tests exist only in the development checkout.
 - Six small, labelled fictional live NVIDIA examples passed schema, citation and keyword-based expected-requirement checks. This is a smoke evaluation, not a statistically meaningful accuracy estimate.
 - Results, model usage and latency are in [submission/live-evaluation.json](submission/live-evaluation.json).
 - Examples cover mandatory/optional classification, quantities, an amendment, an ambiguous deadline, an instruction-injection example, and commercial requirements.

@@ -35,3 +35,9 @@ Third-party document content is untrusted. Prompts tell the model to treat it as
 ## Validation
 
 Automated tests use real API requests, real SQLite, restart persistence, document parsing and package ZIP inspection. Live evaluation uses six fictional extraction examples and three additional synthetic semantic/vision/reasoning cases against actual Nebius inference. Keyword-based recall proxies and exact citation checks are useful smoke checks but cannot substantiate general accuracy or customer impact. Customer validation is outstanding.
+
+## Readiness projection and impact map
+
+`proposal_readiness.py` derives structured issues and dependency rows from persisted proposal state. `proposals.blockers()` consumes the same blocking issues that populate the final review, and approval, export and user-reported submission enforce them. A stored approval hash alone cannot bypass expired evidence or outstanding reviews. Projections are read-only; they are not persisted inside the package document or included recursively in approval hashing. Exported internal review JSON includes the evaluated readiness and impact snapshots.
+
+Dependency edges use existing source IDs, requirement keys, selected evidence IDs, attachment associations and task keys. No new model call infers these edges. Historical before/after text comes from the stored previous requirement version and preserved sources. A requirement-key mismatch can still omit or misassociate an amendment change; the UI explicitly requires human review. Pending unanalyzed amendments are identified separately. Advisory owner assignments and exceptions are distinct from blocking obligations.

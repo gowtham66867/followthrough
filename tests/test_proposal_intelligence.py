@@ -84,6 +84,8 @@ def test_semantic_and_reasoning_advice_cannot_bypass_evidence_quotes_or_revision
         assert not client.get('/api/proposals/'+pid).json().get('risk_review')
         mode['invalid']=False;post('/risk-review')
         finding=d['risk_review']['issues'][0]
+        impact=next(r for r in d['impact']['rows'] if r['key']=='delivery_plan')
+        assert 'risk:'+finding['id'] in impact['blocking_issue_ids']
         assert any('Decide review finding' in b for b in d['blockers'])
         source=next(s for s in d['sources'] if s['id']==finding['citations'][0]['source_id']);ref=finding['citations'][0]
         assert source['text'][ref['start']:ref['end']]==ref['quote']

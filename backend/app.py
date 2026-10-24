@@ -52,7 +52,7 @@ def create_app(directory: Path, config=None, port=8787):
         yield
         jobs.stop()
 
-    app = FastAPI(title='FollowThrough', version='0.3.0', lifespan=lifespan,
+    app = FastAPI(title='FollowThrough', version='0.4.0', lifespan=lifespan,
                   docs_url=None, redoc_url=None, openapi_url=None)
     app.state.store, app.state.jobs, app.state.config = store, jobs, config
     from .proposal_routes import router as proposal_router

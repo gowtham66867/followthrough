@@ -36,36 +36,8 @@ def answer_supported(d, answer):
 
 
 def blockers(d):
-    result = []
-    active = [r for r in d['requirements'] if r['status'] != 'withdrawn']
-    if not active:
-        result.append('Analyze and review at least one requirement')
-    for source in d['sources']:
-        if (source.get('ingestion') or {}).get('review_required') and not source.get('transcription_reviewed'):
-            result.append('Review visual transcription: ' + source['filename'])
-        if not source.get('receipt') and not source.get('attachment') and not source.get('analyzed'):
-            result.append('Analyze source: ' + source['filename'])
-    for r in active:
-        if r['status'] != 'confirmed':
-            result.append('Review requirement: ' + r['title'])
-        if not r['required']:
-            continue
-        a = d['answers'].get(r['key'], {})
-        if not a.get('reviewed') or not a.get('text', '').strip():
-            result.append('Review answer: ' + r['title'])
-        elif not answer_supported(d, a) and not a.get('exception', '').strip():
-            result.append('Unsupported answer: ' + r['title'])
-        if r['attachment'] and not any(s.get('attachment') == r['key'] for s in d['sources']):
-            result.append('Missing attachment: ' + r['title'])
-    if not d['deadline'] or not d['deadline'].get('confirmed'):
-        result.append('Confirm the submission deadline')
-    if d.get('risk_review'):
-        from .proposal_risks import fingerprint
-        if d['risk_review']['fingerprint'] != fingerprint(d):
-            result.append('Refresh outdated conflict review')
-        else:
-            result.extend('Decide review finding: ' + i['summary'] for i in d['risk_review']['issues'] if not i['decision'])
-    return result
+    from .proposal_readiness import issues
+    return [item['title'] for item in issues(d) if item['blocking']]
 
 
 class Proposals:
@@ -83,8 +55,12 @@ class Proposals:
             record['current'] = record['fingerprint'] == retrieval_fingerprint(d, key)
         if d.get('risk_review'):
             d['risk_review']['current'] = d['risk_review']['fingerprint'] == risk_fingerprint(d)
-        d['blockers'] = blockers(d)
-        d['approved_current'] = bool(d['approval'] and d['approval']['revision'] == d['revision'] and d['approval']['hash'] == digest(package_content(d)))
+        from .proposal_readiness import issues, report, impact_map
+        readiness_issues = issues(d)
+        d['blockers'] = [i['title'] for i in readiness_issues if i['blocking']]
+        d['approved_current'] = bool(d['approval'] and d['approval']['revision'] == d['revision'] and d['approval']['hash'] == digest(package_content(d)) and not d['blockers'])
+        d['readiness'] = report(d, readiness_issues)
+        d['impact'] = impact_map(d, readiness_issues)
         return d
 
     def list(self):
@@ -282,7 +258,7 @@ class Proposals:
 
     def report_submission(self, pid, revision):
         def mutate(d):
-            if not d['approval'] or d['approval']['hash'] != digest(package_content(d)):
+            if blockers(d) or not d['approval'] or d['approval']['revision'] != d['revision'] or d['approval']['hash'] != digest(package_content(d)):
                 raise Conflict('Approve the current package first')
             d['submission'] = {'basis': 'user_reported', 'at': now(), 'revision': d['revision']}
         return self.change(pid, revision, 'submission_reported', mutate, material=False)

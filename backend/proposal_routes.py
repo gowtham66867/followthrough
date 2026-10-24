@@ -126,7 +126,7 @@ def router(store, config):
         output = BytesIO()
         with ZipFile(output, 'w', ZIP_DEFLATED) as archive:
             archive.writestr('proposal.docx', proposal_docx(d))
-            archive.writestr('internal-review.json', json.dumps({k:d.get(k) for k in ('requirements','evidence','answers','deadline','approval','blockers','risk_review','risk_review_history','retrieval')},indent=2))
+            archive.writestr('internal-review.json', json.dumps({k:d.get(k) for k in ('requirements','evidence','answers','deadline','approval','blockers','risk_review','risk_review_history','retrieval','readiness','impact')},indent=2))
             attachments = [s for s in d['sources'] if s.get('attachment')]
             archive.writestr('attachment-manifest.json',json.dumps([{k:s[k] for k in ('id','filename','hash','attachment')} for s in attachments],indent=2))
             for s in attachments:

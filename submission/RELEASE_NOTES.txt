@@ -1,21 +1,18 @@
-FollowThrough v0.3.0 — semantic evidence, visual sources and cited conflict review
+FollowThrough v0.4.0 — proposal impact map and actionable final review
 
-Download followthrough-v0.3.0.zip, extract, create a Python 3.11+ virtual environment, install requirements.txt and run run.py. Open http://127.0.0.1:8787. The frontend is already built in the ZIP.
+Download followthrough-v0.4.0.zip, extract, create a Python 3.11+ virtual environment, install requirements.txt and run run.py. Open http://127.0.0.1:8787. The frontend is already built.
 
-Load guided demo for a clearly labelled fictional walkthrough without accounts or credits. Live features require your own Nebius Token Factory key and YAML model configuration. No developer key or private user data is distributed.
+New:
+- Before you submit: one action queue for source review, missing or unreviewed answers, unsupported claims, missing attachments, deadlines and unresolved conflict decisions. Advisory owner assignments and exceptions are separate from blockers.
+- Impact map: trace source → requirement → selected evidence → answer → attachment/owner → package approval. Compare original and amended wording; filter changed obligations; open the exact source, evidence record, answer or owner form.
+- One backend readiness contract drives the screen, approval, export and user-reported submission. Expired evidence blocks an earlier approval even if its hash has not changed. Read-only projections do not alter revisions.
+- Missing-attachment actions preselect the deliverable; owner actions open its assignment form. Unanalyzed amendments explicitly show incomplete mapping.
 
-New in this release:
-- Qwen embeddings shortlist approved, unexpired evidence; NVIDIA Nano reviews relevance. Candidates remain suggestions until selected and reviewed. The documented dedicated Qwen reranker returned model-not-found, so reranking explicitly uses NVIDIA chat relevance assessment.
-- NVIDIA Super VL transcribes scanned PDF pages, PNG/JPEG and document tables. Compare the transcription against each original page and confirm or correct it before analysis. At most six pages per visual import. This is model transcription with human review, not guaranteed OCR accuracy.
-- On-demand NVIDIA Super reasoning produces source-cited conflict and amendment findings. Findings require owner decisions; stale reviews block approval/export. No raw chain-of-thought is displayed or stored.
+Retained from v0.3: Qwen semantic evidence search followed by NVIDIA chat relevance assessment, human-reviewed NVIDIA vision transcription, and optional source-cited NVIDIA reasoning for conflicts. The dedicated Qwen reranker was unavailable on the tested account. Live features require your own Nebius key and YAML configuration. The explicitly fictional guided walkthrough works without credentials; no private developer key is distributed.
 
-Core features retained: sourced requirements, PDF/DOCX/text imports, approved company evidence, missing-input tasks, amendment review, approval invalidation, DOCX/attachment export, separate submission and receipt evidence.
+Validation: 13 standalone automated tests plus two development-only starter tests. Added contracts cover amendment/source/evidence/owner/approval links, restart persistence, expired evidence and consistent approval/export/submission gates. The browser walkthrough covered approval, a late amendment, changed wording and attachment targeting at desktop and narrow widths. Earlier v0.3 live smoke results are retained; no new inference path was introduced in v0.4.
 
-Validation: 11 standalone automated tests, including real HTTP/SQLite contracts, plus three live synthetic semantic/vision/reasoning smoke cases and six earlier extraction cases. These are not a production accuracy benchmark or customer impact measurement. See submission/advanced-live-evaluation.json and submission/live-evaluation.json.
+Original public 2:30 demo (v0.2 core workflow): https://www.youtube.com/watch?v=TGrqRwF3qm0
+The video does not show v0.3/v0.4 additions. See submission/12 through 17 screenshots for new features.
 
-Original core-workflow YouTube demo (v0.2): https://www.youtube.com/watch?v=TGrqRwF3qm0
-This video does not show the v0.3 additions. New feature screenshots are included in submission/.
-
-Single-owner local application. No public multi-tenant hosting, legal guarantee, automated external submission, arbitrary spreadsheet ingestion or independently authenticated receipts. Semantic evidence and visual transcriptions require human review. Gmail OAuth is optional and unverified. Do not expose this local app through a public tunnel.
-
-See README.md for setup and model settings, submission/SUBMISSION.txt for the proposed Devpost entry, and docs/ARCHITECTURE.md for boundaries.
+Single-owner local application, not public hosting or a multi-tenant service. Links reflect stored associations and model-proposed requirement keys; a person verifies authority, relevance and completeness. No agency pilots, measured savings, production accuracy, legal guarantee or autonomous bid submission are claimed. Optional Gmail OAuth remains unverified.

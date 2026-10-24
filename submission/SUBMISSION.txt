@@ -20,7 +20,7 @@ Why this is agentic
 The system moves work through extraction, evidence retrieval, gap identification, amendment review, approval and export while preserving state and audit history. The model proposes requirements; code enforces evidence and approval boundaries. We deliberately use lexical retrieval and verbatim evidence drafts rather than presenting unsupported prose as a completed proposal. No autonomous external submission is implemented.
 
 Testing
-11 standalone automated checks passed (plus two development-only starter checks), including two end-to-end proposal contracts with real SQLite and API calls. Six small fictional live NVIDIA examples passed schema, exact-quotation and keyword-based expected-requirement checks. These are smoke tests, not a claim of 95% production accuracy. The application source view was also tested through a live model call in the browser.
+13 standalone automated checks passed (plus two development-only starter checks), including two end-to-end proposal contracts with real SQLite and API calls. Six small fictional live NVIDIA examples passed schema, exact-quotation and keyword-based expected-requirement checks. These are smoke tests, not a claim of 95% production accuracy. The application source view was also tested through a live model call in the browser.
 
 Challenges
 Initial live requests returned extra fields, truncated responses and incorrect character offsets. We made the schema explicit, requested JSON, disabled unnecessary thinking for Nano extraction, and moved citation-offset calculation into code. Unknown or ambiguous quotations fail closed. Model omissions and semantic misinterpretation remain possible, so users review requirements and evidence relevance.
@@ -38,10 +38,13 @@ Repository
 https://github.com/gowtham66867/followthrough
 
 Test build
-https://github.com/gowtham66867/followthrough/releases/tag/v0.3.0
+https://github.com/gowtham66867/followthrough/releases/tag/v0.4.0
 
 Public YouTube demo URL
 https://www.youtube.com/watch?v=TGrqRwF3qm0
 
 Version 0.3 additions
 Semantic search uses Qwen/Qwen3-Embedding-8B to shortlist approved evidence and NVIDIA Nano to assess relevance. The documented dedicated Qwen reranker returned 404 on this account, so we explicitly use chat-based reranking. NVIDIA Nemotron-3.5-Super-VL transcribes scanned pages and tables; users must verify the text against originals before analysis. NVIDIA Super performs optional deeper conflict review with thinking enabled, exact source citations and recorded human dispositions. Unresolved findings and outdated reviews block approval/export. Three fictional live smoke cases passed; these are not broad accuracy measurements. The public 2:30 video shows the v0.2 core workflow; additional screenshots document these new features.
+
+Version 0.4 additions
+A source-to-approval impact map shows original and amended requirements, selected evidence, answer review, attachments and missing-input owners. The default Before you submit screen groups actionable blockers and advisory follow-ups. The same readiness contract controls the screen, approval, export and user-reported submission; expired evidence can reopen readiness even without a content change. All added map edges are derived from stored associations, not an inferred claim of completeness. Customer pilots, comparative review-time measurement and a broader labelled evaluation remain outstanding.
