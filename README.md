@@ -4,13 +4,17 @@ A local proposal-readiness assistant for small software agencies. It keeps clien
 
 **Hackathon MVP, not a production service.** Built with Nebius Token Factory and `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B`. No customer impact or contract-win claims have been measured.
 
-[Watch the original 2:30 core-workflow demo](https://www.youtube.com/watch?v=TGrqRwF3qm0) · [Download the test build](https://github.com/gowtham66867/followthrough/releases/tag/v0.4.0)
+[Try the free public interactive demo](https://gowtham66867.github.io/followthrough/) · [Watch the original 2:30 core-workflow demo](https://www.youtube.com/watch?v=TGrqRwF3qm0) · [Download the test build](https://github.com/gowtham66867/followthrough/releases/tag/v0.4.0)
 
 ![Amendment impact map](submission/16-amendment-impact-map.png)
 
 ## The business problem
 
 A proposal owner reconciles an RFP, clarification emails, company case studies and amendments manually. A missed attachment can make a proposal incomplete; an unsupported promise can create delivery risk. FollowThrough exposes those gaps before export.
+
+## Free public walkthrough
+
+The [GitHub Pages demo](https://gowtham66867.github.io/followthrough/) runs entirely in the browser with prewritten fictional sources and answers. Review the original package, approve it, add an amendment and inspect reopened obligations. No live AI, credentials, uploads or API calls are included. State resets on refresh. The JSON download is a demo report, not a client proposal. Static source lives in `public-demo/`; this is separate from the full local app below.
 
 ## Start the test build
 
