@@ -41,6 +41,8 @@ def blockers(d):
     if not active:
         result.append('Analyze and review at least one requirement')
     for source in d['sources']:
+        if (source.get('ingestion') or {}).get('review_required') and not source.get('transcription_reviewed'):
+            result.append('Review visual transcription: ' + source['filename'])
         if not source.get('receipt') and not source.get('attachment') and not source.get('analyzed'):
             result.append('Analyze source: ' + source['filename'])
     for r in active:
@@ -57,6 +59,12 @@ def blockers(d):
             result.append('Missing attachment: ' + r['title'])
     if not d['deadline'] or not d['deadline'].get('confirmed'):
         result.append('Confirm the submission deadline')
+    if d.get('risk_review'):
+        from .proposal_risks import fingerprint
+        if d['risk_review']['fingerprint'] != fingerprint(d):
+            result.append('Refresh outdated conflict review')
+        else:
+            result.extend('Decide review finding: ' + i['summary'] for i in d['risk_review']['issues'] if not i['decision'])
     return result
 
 
@@ -69,6 +77,12 @@ class Proposals:
         if not rows:
             raise LookupError('Proposal not found')
         d = json.loads(rows[0]['document_json'])
+        from .proposal_retrieval import fingerprint as retrieval_fingerprint
+        from .proposal_risks import fingerprint as risk_fingerprint
+        for key, record in d.get('retrieval', {}).items():
+            record['current'] = record['fingerprint'] == retrieval_fingerprint(d, key)
+        if d.get('risk_review'):
+            d['risk_review']['current'] = d['risk_review']['fingerprint'] == risk_fingerprint(d)
         d['blockers'] = blockers(d)
         d['approved_current'] = bool(d['approval'] and d['approval']['revision'] == d['revision'] and d['approval']['hash'] == digest(package_content(d)))
         return d
@@ -105,7 +119,7 @@ class Proposals:
             c.execute('UPDATE proposals SET document_json=? WHERE id=?', (json.dumps(d), pid))
         return self.get(pid)
 
-    def add_source(self, pid, revision, filename, text, locations, *, amendment=False, receipt=False, attachment='', encoded=''):
+    def add_source(self, pid, revision, filename, text, locations, *, amendment=False, receipt=False, attachment='', encoded='', ingestion=None):
         if receipt and (amendment or attachment):
             raise ValueError('Receipt sources cannot also be amendments or attachments')
         if not text.strip() or len(text) > 80000:
@@ -119,7 +133,8 @@ class Proposals:
             sid = uuid.uuid4().hex
             d['sources'].append({'id': sid, 'filename': filename, 'text': text, 'hash': content_hash,
                                  'locations': locations, 'amendment': amendment, 'receipt': receipt,
-                                 'attachment': attachment, 'original_base64': encoded, 'analyzed': False, 'at': now()})
+                                 'attachment': attachment, 'original_base64': encoded, 'analyzed': False,
+                                 'ingestion': ingestion, 'transcription_reviewed': False, 'at': now()})
             return {'source_id': sid, 'filename': filename}
         return self.change(pid, revision, 'source_imported', mutate, material=not receipt)
 
@@ -130,6 +145,8 @@ class Proposals:
         source = next((s for s in d['sources'] if s['id'] == source_id), None)
         if not source or source.get('receipt') or source.get('attachment'):
             raise ValueError('Select an RFP or amendment source')
+        if (source.get('ingestion') or {}).get('review_required') and not source.get('transcription_reviewed'):
+            raise ValueError('Compare the visual transcription with the original pages and confirm it first')
         raw, usage = Nebius(self.config).complete('proposal_extract.txt', {
             'source': {'id': source_id, 'text': source['text']},
             'existing_requirements': [{'key': r['key'], 'title': r['title']} for r in d['requirements']],
@@ -142,6 +159,8 @@ class Proposals:
             source = next((s for s in d['sources'] if s['id'] == source_id), None)
             if not source:
                 raise ValueError('Unknown source')
+            if (source.get('ingestion') or {}).get('review_required') and not source.get('transcription_reviewed'):
+                raise ValueError('Review the visual transcription before applying requirements')
             seen, changes = set(), []
             for item in analysis.requirements:
                 if item.key in seen:
@@ -273,6 +292,8 @@ class Proposals:
             source = next((s for s in d['sources'] if s['id'] == body.source_id and s.get('receipt')), None)
             if not source:
                 raise ValueError('Choose an imported receipt source')
+            if (source.get('ingestion') or {}).get('review_required') and not source.get('transcription_reviewed'):
+                raise ValueError('Review the visual transcription before confirming receipt evidence')
             locate(source['text'], body.quote)
             if d['title'].lower() not in body.quote.lower() or not re.search(r'\b(received|submitted|acknowledge|acknowledged)\b', body.quote, re.I):
                 raise ValueError('Receipt must explicitly name this opportunity and confirm receipt or submission')

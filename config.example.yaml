@@ -4,3 +4,9 @@ gmail_client_id: ''
 gmail_redirect_uri: http://127.0.0.1:8787/api/gmail/callback
 request_timeout_seconds: 90
 enable_thinking: false # Optional model-specific chat-template setting; verified with Nemotron 3 Nano.
+
+# Optional live features. Each is invoked explicitly from the workspace.
+embedding_model: Qwen/Qwen3-Embedding-8B
+reranking_model: nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B
+vision_model: nvidia/Nemotron-3.5-Super-VL
+reasoning_model: nvidia/nemotron-3-super-120b-a12b

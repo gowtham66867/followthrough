@@ -20,7 +20,7 @@ Why this is agentic
 The system moves work through extraction, evidence retrieval, gap identification, amendment review, approval and export while preserving state and audit history. The model proposes requirements; code enforces evidence and approval boundaries. We deliberately use lexical retrieval and verbatim evidence drafts rather than presenting unsupported prose as a completed proposal. No autonomous external submission is implemented.
 
 Testing
-11 automated checks passed in the development checkout, including two end-to-end proposal contracts with real SQLite and API calls. Six small fictional live NVIDIA examples passed schema, exact-quotation and keyword-based expected-requirement checks. These are smoke tests, not a claim of 95% production accuracy. The application source view was also tested through a live model call in the browser.
+11 standalone automated checks passed (plus two development-only starter checks), including two end-to-end proposal contracts with real SQLite and API calls. Six small fictional live NVIDIA examples passed schema, exact-quotation and keyword-based expected-requirement checks. These are smoke tests, not a claim of 95% production accuracy. The application source view was also tested through a live model call in the browser.
 
 Challenges
 Initial live requests returned extra fields, truncated responses and incorrect character offsets. We made the schema explicit, requested JSON, disabled unnecessary thinking for Nano extraction, and moved citation-offset calculation into code. Unknown or ambiguous quotations fail closed. Model omissions and semantic misinterpretation remain possible, so users review requirements and evidence relevance.
@@ -29,16 +29,19 @@ Nebius and NVIDIA feedback
 Nebius's OpenAI-compatible HTTP API made integration straightforward. The model catalog endpoint successfully identified available NVIDIA models. Nemotron 3 Nano handled six small requirement-extraction cases with approximately 1 to 2 second latency after changing the inference configuration. Earlier reasoning-enabled requests consumed far more output budget and could truncate. Exact numeric citation offsets were unreliable; code-based quotation anchoring was more appropriate. The onboarding credit form initially did not load in the automated browser, and the emailed code arrived later. Credits were successfully redeemed. We would use this stack again for bounded extraction with deterministic validation and human review; these observations do not establish general model quality or throughput.
 
 Limitations
-Single-owner local test build, not a public multi-tenant service. No measured customer impact, contract-win improvement or time savings. No OCR, arbitrary spreadsheets, autonomous submission or legal-compliance guarantee. Evidence retrieval is lexical, so relevance is reviewed by a person. Gmail OAuth is optional and remains unverified; the main journey works with documents and pasted emails. Receipt authenticity is not independently verified. User exceptions are explicit and auditable. No real client documents are included in the demo.
+Single-owner local test build, not a public multi-tenant service. No measured customer impact, contract-win improvement or time savings. Visual transcription requires human verification; no arbitrary spreadsheet ingestion, autonomous submission or legal-compliance guarantee. Evidence retrieval supports local keyword matching or Qwen embeddings followed by NVIDIA relevance assessment. Relevance is reviewed by a person. Gmail OAuth is optional and remains unverified; the main journey works with documents and pasted emails. Receipt authenticity is not independently verified. User exceptions are explicit and auditable. No real client documents are included in the demo.
 
 Future work
-Customer interviews, permissioned real-RFP pilots, broader labelled evaluation, better semantic evidence retrieval, and authenticated organization-scoped deployment before any public service exposure.
+Customer interviews, permissioned real-RFP pilots, broader labelled evaluation, stronger semantic-retrieval quality measurement, and authenticated organization-scoped deployment before any public service exposure.
 
 Repository
 https://github.com/gowtham66867/followthrough
 
 Test build
-https://github.com/gowtham66867/followthrough/releases/latest
+https://github.com/gowtham66867/followthrough/releases/tag/v0.3.0
 
 Public YouTube demo URL
 https://www.youtube.com/watch?v=TGrqRwF3qm0
+
+Version 0.3 additions
+Semantic search uses Qwen/Qwen3-Embedding-8B to shortlist approved evidence and NVIDIA Nano to assess relevance. The documented dedicated Qwen reranker returned 404 on this account, so we explicitly use chat-based reranking. NVIDIA Nemotron-3.5-Super-VL transcribes scanned pages and tables; users must verify the text against originals before analysis. NVIDIA Super performs optional deeper conflict review with thinking enabled, exact source citations and recorded human dispositions. Unresolved findings and outdated reviews block approval/export. Three fictional live smoke cases passed; these are not broad accuracy measurements. The public 2:30 video shows the v0.2 core workflow; additional screenshots document these new features.

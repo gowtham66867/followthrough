@@ -30,6 +30,7 @@ class SourceInput(Strict):
     amendment: bool = False
     receipt: bool = False
     attachment: str = Field(default='', max_length=80)
+    vision: bool = False
 
 class Revision(Strict):
     expected_revision: int
@@ -64,3 +65,41 @@ class ReceiptInput(Revision):
     source_id: str
     quote: str = Field(min_length=1, max_length=4000)
     kind: str = Field(pattern=r'^(submission|acknowledgement)$')
+
+class RankedEvidence(Strict):
+    id: str = Field(min_length=1, max_length=100)
+    relevant: bool
+    reason: str = Field(min_length=1, max_length=1200)
+
+class EvidenceRanking(Strict):
+    candidates: list[RankedEvidence] = Field(max_length=8)
+
+class SemanticSearch(Revision):
+    requirement_key: str
+
+class RiskCitation(Strict):
+    source_id: str
+    quote: str = Field(min_length=1, max_length=4000)
+
+class RiskIssue(Strict):
+    kind: str = Field(pattern=r'^(conflict|amendment|evidence_gap)$')
+    severity: str = Field(pattern=r'^(warning|critical)$')
+    summary: str = Field(min_length=1, max_length=2000)
+    question: str = Field(min_length=1, max_length=1000)
+    requirement_keys: list[str] = Field(max_length=20)
+    citations: list[RiskCitation] = Field(min_length=1, max_length=6)
+
+class RiskAnalysis(Strict):
+    summary: str = Field(min_length=1, max_length=2500)
+    issues: list[RiskIssue] = Field(max_length=8)
+
+class RiskDecision(Revision):
+    decision: str = Field(pattern=r'^(accepted|dismissed)$')
+    rationale: str = Field(min_length=10, max_length=2000)
+
+class VisualPage(Strict):
+    text: str = Field(min_length=1, max_length=20000)
+    uncertain_passages: list[str] = Field(max_length=30)
+
+class TranscriptionReview(Revision):
+    text: str = Field(min_length=1, max_length=80000)

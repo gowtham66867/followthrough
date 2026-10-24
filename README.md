@@ -4,7 +4,7 @@ A local proposal-readiness assistant for small software agencies. It keeps clien
 
 **Hackathon MVP, not a production service.** Built with Nebius Token Factory and `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B`. No customer impact or contract-win claims have been measured.
 
-[Watch the 2:30 demo](https://www.youtube.com/watch?v=TGrqRwF3qm0) · [Download the test build](https://github.com/gowtham66867/followthrough/releases/tag/v0.2.0)
+[Watch the original 2:30 core-workflow demo](https://www.youtube.com/watch?v=TGrqRwF3qm0) · [Download the test build](https://github.com/gowtham66867/followthrough/releases/tag/v0.3.0)
 
 ![Proposal workspace](submission/02-requirements.png)
 
@@ -45,11 +45,37 @@ Restart the app. In **Sources**, select an RFP and click **Analyze with NVIDIA**
 
 `enable_thinking: false` was tested with Nemotron 3 Nano to avoid spending the response budget on reasoning. Other models may support different template options.
 
+## Semantic evidence, visual pages and deeper review
+
+The optional settings in `config.example.yaml` were live-tested on this account on October 23, 2026:
+
+| Purpose | Model | Invocation |
+| --- | --- | --- |
+| Requirement extraction | `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B` | Analyze a selected source |
+| Semantic shortlist | `Qwen/Qwen3-Embedding-8B` | Find evidence with Nebius |
+| Relevance assessment | `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B` | After the embedding shortlist |
+| Page transcription | `nvidia/Nemotron-3.5-Super-VL` | Explicit visual import |
+| Cited conflict review | `nvidia/nemotron-3-super-120b-a12b` | Conflict review tab |
+
+Model availability can change. Set these model IDs explicitly in YAML and use your own Nebius key. The documented `Qwen/Qwen3-Reranker-8B` returned HTTP 404 on our account; the implemented reranking is NVIDIA **chat-based relevance assessment**, not the unavailable dedicated `/rerank` model. Failed live calls never switch to fixtures.
+
+Semantic retrieval searches up to 64 non-overlapping 1,000-character passages from approved, unexpired evidence, then assesses the top eight. The UI shows candidate excerpts, model explanations and similarity. It does not overwrite reviewed answers or approve a candidate. Selecting a candidate inserts its complete approved evidence record; review it before saving. Search results become stale when the requirement or valid evidence changes. No vector database or hidden background indexing is used.
+
+**Conflict review** is optional and on demand. It sends the opportunity's original RFP/amendment text, requirement state, deadline and approved company evidence to the configured reasoning model with thinking enabled. Output is limited to eight cited findings, not raw chain-of-thought. Exact source quotes are checked by code. A new review clears existing approval. Once used, unresolved findings and outdated reviews block approval/export. The owner can accept a risk with documented follow-up or dismiss a finding with a reason. This records a decision; it does not resolve a contractual ambiguity or override other readiness checks. Source, requirement, deadline and approved-evidence changes require a new review. Prior reviews and decisions remain auditable.
+
+Three fictional live smoke cases passed: semantic search (~14.3 s), visual transcription (~1.8 s), and conflict review (~8.9 s) in the latest run. These are single observations, not service-level or accuracy claims. See [advanced evaluation](submission/advanced-live-evaluation.json). The original YouTube video demonstrates the v0.2 core workflow; new feature captures are included separately.
+
+To repeat these paid, synthetic-only checks deliberately:
+
+```sh
+python scripts/validate_advanced.py --credentials /private/path/to/credentials.json
+```
+
 ## Walk through the proposal journey
 
 1. Load the fictional Northstar Customer Portal opportunity.
 2. Inspect each requirement and source, then confirm the displayed requirements.
-3. Select **Match approved evidence**. These are deterministic evidence excerpts, not invented AI prose.
+3. Select **Match by keywords (local)** for offline matching, or open **Prepare answer → Find evidence with Nebius** for semantic search and NVIDIA relevance review. Suggestions never change an answer until you choose a record.
 4. Open each answer, check relevance and select **I reviewed this answer** before saving.
 5. Confirm the sourced deadline. Open package review, approve the exact revision, and export.
 6. Add the fictional client amendment. It changes delivery, adds a security attachment and asks about certification. The previous approval is invalidated and the affected answer needs review.
@@ -61,13 +87,13 @@ A task marked done does not approve an answer. Approval does not submit anything
 
 ## Documents and exports
 
-Import PDF, DOCX, TXT, MD or EML, or paste selected email text. Files are limited to 3 MB and text to 80,000 characters. PDFs are limited to 25 text-readable pages. Unreadable pages require OCR, which is not implemented. Macros and embedded instructions are never executed.
+Import PDF, DOCX, TXT, MD or EML, or paste selected email text. Standard imports stay local and support up to 25 text-readable PDF pages. For scanned PDFs, table-heavy pages, PNG or JPEG, select **Read scanned pages and tables with Nebius vision**. This uploads rendered page images immediately, supports 1–6 pages, and requires you to compare and correct the transcription against every original page before analysis. Files are limited to 3 MB, text to 80,000 characters, images to 20 megapixels, and rendered pages to 1600 pixels on the longest side. Small text may be lost at that resolution; split or crop documents as needed. Visual quotations are grounded in the human-reviewed transcription, not independently verified pixels. Macros and embedded instructions are never executed.
 
 The export ZIP contains a client-facing `proposal.docx`, separate internal review JSON, attachment manifest, and original uploaded attachment files. Pasted attachments export as text. Internal exceptions and source review notes stay out of the client-facing document.
 
 ## Validation
 
-- 11 automated checks passed across the proposal and original email workflows in the development checkout.
+- 11 standalone automated tests cover the proposal and original email workflows, including two integrated HTTP/SQLite contracts for semantic retrieval, conflict dispositions and multipage visual imports. Two additional starter tests exist only in the development checkout.
 - Six small, labelled fictional live NVIDIA examples passed schema, citation and keyword-based expected-requirement checks. This is a smoke evaluation, not a statistically meaningful accuracy estimate.
 - Results, model usage and latency are in [submission/live-evaluation.json](submission/live-evaluation.json).
 - Examples cover mandatory/optional classification, quantities, an amendment, an ambiguous deadline, an instruction-injection example, and commercial requirements.
@@ -98,9 +124,9 @@ The original email workspace includes read-only Gmail OAuth. It requires your ow
 
 - No real customer interviews, adoption, revenue or time-saving measurements.
 - No legal/commercial compliance guarantee or automated bid submission.
-- No OCR, arbitrary spreadsheets or email-history disentangling.
+- Visual transcription can omit or misread content; human comparison is required. No arbitrary spreadsheet ingestion or email-history disentangling.
 - No automatic determination that a later message is authoritative; the user reviews amendments.
-- Evidence matching is lexical and exact-excerpt based; it can miss relevant evidence or suggest irrelevant passages. Human review is required.
+- Local matching uses keywords. Optional semantic matching uses embeddings followed by NVIDIA chat relevance assessment; it can still miss evidence or misjudge relevance. Neither similarity nor model relevance is a calibrated confidence score.
 - Requirement omissions, paraphrase errors and unstable model-generated keys remain possible. Human requirement review is essential.
 - Sources are selected and imported by the user; no continuous inbox monitoring.
 - No production hosting, organization isolation or team collaboration.

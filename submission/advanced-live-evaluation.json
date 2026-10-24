@@ -1,0 +1,142 @@
+{
+  "scope": "Three fictional live smoke cases; not a quality benchmark or customer outcome measurement.",
+  "evaluation_notes": "A repeat correctly identified conflicting dates under kind=amendment. The expectation checks cited conflicting durations and a clarification question rather than a category label. Browser QA exposed long-ID copying errors; short P1-style model references replaced them while original IDs remain code-controlled.",
+  "reranking": "NVIDIA chat relevance assessment; the documented Qwen rerank model returned 404 on this account.",
+  "results": [
+    {
+      "case": "semantic_evidence",
+      "status": "passed",
+      "latency_ms": 14290,
+      "embedding": {
+        "model": "Qwen/Qwen3-Embedding-8B",
+        "usage": {
+          "prompt_tokens": 160,
+          "total_tokens": 160,
+          "completion_tokens": 0,
+          "prompt_tokens_details": null
+        },
+        "latency_ms": 10092,
+        "mode": "live"
+      },
+      "reranking": {
+        "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+        "usage": {
+          "completion_tokens": 146,
+          "prompt_tokens": 436,
+          "total_tokens": 582,
+          "completion_tokens_details": null,
+          "prompt_tokens_details": null
+        },
+        "latency_ms": 4174,
+        "mode": "live"
+      },
+      "passages_searched": 5,
+      "relevant_count": 1
+    },
+    {
+      "case": "vision_transcription",
+      "status": "passed",
+      "latency_ms": 1829,
+      "ingestion": {
+        "method": "nebius_vision",
+        "model": "nvidia/Nemotron-3.5-Super-VL",
+        "review_required": true,
+        "pages": [
+          {
+            "page": 1,
+            "uncertain_passages": [],
+            "analysis": {
+              "model": "nvidia/Nemotron-3.5-Super-VL",
+              "usage": {
+                "completion_tokens": 117,
+                "prompt_tokens": 1173,
+                "total_tokens": 1290,
+                "completion_tokens_details": {
+                  "accepted_prediction_tokens": null,
+                  "audio_tokens": null,
+                  "reasoning_tokens": 0,
+                  "rejected_prediction_tokens": null
+                },
+                "prompt_tokens_details": {
+                  "audio_tokens": null,
+                  "cached_tokens": 0,
+                  "created_cache_tokens": 0,
+                  "multimodal_tokens": {
+                    "image": 1002
+                  }
+                }
+              },
+              "latency_ms": 1747,
+              "mode": "live"
+            }
+          }
+        ],
+        "original_sha256": "8f13f872e20c67b04425885682efbe0f455b2388f74555f4baf76e925eb935e5"
+      },
+      "text": "NORTHSTAR CUSTOMER PORTAL\n\nFICTIONAL AMENDMENT - HUMAN CLARIFICATION REQUIRED\n\nThe delivery window remains 6 weeks from kickoff.\n\nDelivery schedule: all implementation must finish in 4 weeks.\n\nNeither sentence supersedes the other. Ask the client to clarify.\n\nRequired item    Format    Due\nSecurity workbook    Separate file    With proposal\n\nDo not infer a certification from a completed workbook.\n"
+    },
+    {
+      "case": "cited_conflict_review",
+      "status": "passed",
+      "latency_ms": 8852,
+      "analysis": {
+        "model": "nvidia/nemotron-3-super-120b-a12b",
+        "usage": {
+          "completion_tokens": 1599,
+          "prompt_tokens": 1686,
+          "total_tokens": 3285,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 1273,
+            "rejected_prediction_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cached_tokens": 0,
+            "created_cache_tokens": 0,
+            "multimodal_tokens": null
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 1686
+        },
+        "latency_ms": 8828,
+        "mode": "live"
+      },
+      "summary": "Review identifies a conflict in delivery duration requirements between the original RFP and the amendment; all other requirements appear consistent with the supplied evidence, but evidence is not trusted for compliance verification. No other discrepancies were found.",
+      "issues": [
+        {
+          "kind": "conflict",
+          "severity": "critical",
+          "summary": "Conflicting delivery timeline requirements: original RFP specifies twelve\u2011week implementation, while amendment states both a 6\u2011week window from kickoff and a 4\u2011week finish deadline without clarification.",
+          "question": "Please clarify the required implementation duration: should the proposal be based on a 12\u2011week plan, a 6\u2011week window from kickoff, or a 4\u2011week completion schedule?",
+          "requirement_keys": [
+            "delivery_plan"
+          ],
+          "citations": [
+            {
+              "source_id": "b11ca7c992444423a63997cd103a0668",
+              "quote": "Provide a delivery plan for a twelve week implementation.",
+              "start": 126,
+              "end": 183
+            },
+            {
+              "source_id": "f41be46d85c247a3a75f2ef1ec3240d8",
+              "quote": "The delivery window remains 6 weeks from kickoff.",
+              "start": 79,
+              "end": 128
+            },
+            {
+              "source_id": "f41be46d85c247a3a75f2ef1ec3240d8",
+              "quote": "Delivery schedule: all implementation must finish in 4 weeks.",
+              "start": 130,
+              "end": 191
+            }
+          ],
+          "id": "bd4b3180595f4cf89c39489ec55bd933",
+          "decision": null
+        }
+      ]
+    }
+  ]
+}

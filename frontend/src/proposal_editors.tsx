@@ -1,14 +1,15 @@
 import React,{useState} from 'react';
+import {SemanticEvidence} from './proposal_intelligence';
 import type {Proposal,ProposalRequirement,ProposalAnswer,CompanyEvidence} from './proposal_types';
 
-export function ProposalAnswerEditor({op,requirement,busy,onSave}:{op:Proposal;requirement:ProposalRequirement;busy:boolean;onSave:(key:string,body:ProposalAnswer)=>void}){
+export function ProposalAnswerEditor({op,requirement,busy,onSave,onSearch}:{op:Proposal;onSearch:()=>void;requirement:ProposalRequirement;busy:boolean;onSave:(key:string,body:ProposalAnswer)=>void}){
  const existing=op.answers[requirement.key];
  const [text,setText]=useState(existing?.text||'');
  const [refs,setRefs]=useState<string[]>(existing?.evidence_ids||[]);
  const [exception,setException]=useState(existing?.exception||'');
  const [reviewed,setReviewed]=useState(existing?.reviewed||false);
  const supported=!!refs.length && text===op.evidence.filter(e=>refs.includes(e.id)).map(e=>e.text).join('\n\n') && op.evidence.filter(e=>refs.includes(e.id)).every(e=>e.approved&&(!e.expires_on||e.expires_on>=new Date().toISOString().slice(0,10)));
- return <div className="p-answer"><label>Proposal answer<textarea aria-label={`Answer for ${requirement.key}`} value={text} onChange={e=>{setText(e.target.value);setReviewed(false)}} rows={5}/></label>
+ return <div className="p-answer"><SemanticEvidence result={op.retrieval?.[requirement.key]} busy={busy} onSearch={onSearch} onUse={id=>{const e=op.evidence.find(e=>e.id===id);if(e){setRefs([id]);setText(e.text);setReviewed(false);setException('')}}}/><label>Proposal answer<textarea aria-label={`Answer for ${requirement.key}`} value={text} onChange={e=>{setText(e.target.value);setReviewed(false)}} rows={5}/></label>
  <div className="p-evidence-options"><strong>Approved evidence</strong>{op.evidence.filter(e=>e.approved).map(e=><label key={e.id}><input type="checkbox" checked={refs.includes(e.id)} onChange={event=>{const next=event.target.checked?[...refs,e.id]:refs.filter(id=>id!==e.id);setRefs(next);setText(op.evidence.filter(item=>next.includes(item.id)).map(item=>item.text).join('\n\n'));setReviewed(false)}}/>{e.title} <small>v{e.version}</small></label>)}</div>
  <p className={supported?'p-supported':'p-warning'}>{supported?'Verbatim approved evidence • check relevance before review':'Unsupported or edited answer • add evidence or record an explicit owner exception'}</p>
  {!supported&&<label>Owner exception or verified factual correction<textarea aria-label={`Exception for ${requirement.key}`} rows={2} value={exception} onChange={e=>setException(e.target.value)} placeholder="Explain the evidence gap and who verified this answer. This is recorded in the internal review."/></label>}

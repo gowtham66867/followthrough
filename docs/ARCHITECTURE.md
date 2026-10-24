@@ -8,7 +8,11 @@ NVIDIA Nemotron 3 Nano on Nebius Token Factory extracts proposed requirements an
 
 A citation proves text exists, not that an interpretation is correct. Requirement confirmation remains a human decision. Ambiguous dates remain unconfirmed. Amendments preserve original sources and old requirement passages. They propose replacement requirements using model keys; users must inspect the matching because key stability is not guaranteed.
 
-Evidence matching is deterministic lexical retrieval of approved, current company evidence. Draft answers are exact evidence excerpts. This conservative design avoids fabricating capability claims but does not prove semantic relevance. Reviewed answers without supporting excerpts require an explicit owner exception. Exceptions remain visible in the internal package review, not the client-facing DOCX.
+Offline evidence matching uses keywords. Optional semantic search embeds approved, current evidence passages using Qwen, shortlists up to eight with cosine similarity, and uses NVIDIA Nano chat to assess relevance. Dedicated Qwen reranking is unavailable on the tested account. Retrieval output is advice only, scoped to a requirement/evidence fingerprint, and never changes an answer automatically. Draft answers are exact evidence excerpts. This conservative design avoids fabricating capability claims but does not prove semantic relevance. Reviewed answers without supporting excerpts require an explicit owner exception. Exceptions remain visible in the internal package review, not the client-facing DOCX.
+
+Vision import explicitly sends up to six rendered PDF pages or one PNG/JPEG to NVIDIA Super VL. Originals and model transcriptions are retained. Analysis and receipt confirmation require human transcription review first. Quotes refer to reviewed text; model omissions or visual errors remain possible. If a person edits the transcription, page offsets are replaced by an explicit human-corrected location rather than kept inaccurately.
+
+Optional deeper review uses NVIDIA Super with thinking enabled and a bounded context. Its structured findings must cite exact passages from this opportunity. No reasoning trace is stored. Findings require an owner disposition. Once a review exists, changes to its source/requirement/deadline/approved-evidence fingerprint block approval until review is refreshed. Previous reviews are archived; decisions do not silently alter requirements. Review results and dispositions clear existing approval. Advisory retrieval is nonmaterial and cannot overwrite answers; network results still reject a changed starting package revision.
 
 ## Persistence and concurrency
 
@@ -18,16 +22,16 @@ Proposal inference runs in FastAPI's synchronous threadpool. Results compare the
 
 ## Files
 
-PDF parser: pdfplumber, maximum 25 pages, readable text required. DOCX parser: bounded ZIP and XML, no archive extraction or macro execution. Input limit 3 MB; expanded DOCX limit 15 MB; text limit 80,000 characters. Locations map extracted character offsets to pages or paragraphs. These are extracted-text coordinates, not exact visual bounding boxes.
+PDF parser: pdfplumber, maximum 25 pages, readable text required in standard mode; explicit visual mode supports 1–6 pages and human-reviewed model transcription. DOCX parser: bounded ZIP and XML, no archive extraction or macro execution. Input limit 3 MB; expanded DOCX limit 15 MB; text limit 80,000 characters. Locations map extracted character offsets to pages or paragraphs. These are extracted-text coordinates, not exact visual bounding boxes.
 
 The export is a ZIP with minimal standards-based OOXML, internal review JSON and original attachments. Source text, exceptions and evidence are local private records. Do not distribute real workspace data. Generated preview artifacts use fictional data.
 
 ## Security limits
 
-No tenant isolation, team roles, encryption at rest, antivirus scanning, OCR, signed receipt authentication or continuous mail monitoring. Local cookie possession grants workspace access. Arbitrary large HTTP streams without Content-Length are not a hardened internet upload boundary; never expose this service publicly.
+No tenant isolation, team roles, encryption at rest, antivirus scanning, independently verified OCR, signed receipt authentication or continuous mail monitoring. Local cookie possession grants workspace access. Arbitrary large HTTP streams without Content-Length are not a hardened internet upload boundary; never expose this service publicly.
 
 Third-party document content is untrusted. Prompts tell the model to treat it as data; schema and grounding checks enforce structural constraints. These checks do not guarantee resistance to all semantic prompt injection. The evaluation contains one synthetic injection example, not a security certification.
 
 ## Validation
 
-Automated tests use real API requests, real SQLite, restart persistence, document parsing and package ZIP inspection. Live evaluation uses six fictional examples against actual Nebius inference. Keyword-based recall proxies and exact citation checks are useful smoke checks but cannot substantiate general accuracy or customer impact. Customer validation is outstanding.
+Automated tests use real API requests, real SQLite, restart persistence, document parsing and package ZIP inspection. Live evaluation uses six fictional extraction examples and three additional synthetic semantic/vision/reasoning cases against actual Nebius inference. Keyword-based recall proxies and exact citation checks are useful smoke checks but cannot substantiate general accuracy or customer impact. Customer validation is outstanding.

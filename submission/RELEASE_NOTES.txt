@@ -1,17 +1,21 @@
-FollowThrough v0.2.0 — local proposal-readiness test build
+FollowThrough v0.3.0 — semantic evidence, visual sources and cited conflict review
 
-For judges: download followthrough-v0.2.0.zip, extract it, create a Python 3.11+ virtual environment, install requirements.txt, and run run.py. Open http://127.0.0.1:8787 and select Load guided demo. The frontend is already built in the ZIP.
+Download followthrough-v0.3.0.zip, extract, create a Python 3.11+ virtual environment, install requirements.txt and run run.py. Open http://127.0.0.1:8787. The frontend is already built in the ZIP.
 
-No login or API key is needed for the explicitly labelled fictional guided walkthrough. Live NVIDIA analysis requires your own Nebius Token Factory key and config.yaml; full instructions are in README.md. No developer key or private user data is distributed.
+Load guided demo for a clearly labelled fictional walkthrough without accounts or credits. Live features require your own Nebius Token Factory key and YAML model configuration. No developer key or private user data is distributed.
 
-Features: sourced requirements, PDF/DOCX/text import, approved company evidence, missing-input tasks, amendment impact review, approval invalidation, DOCX/attachment export, separate submission and receipt evidence.
+New in this release:
+- Qwen embeddings shortlist approved, unexpired evidence; NVIDIA Nano reviews relevance. Candidates remain suggestions until selected and reviewed. The documented dedicated Qwen reranker returned model-not-found, so reranking explicitly uses NVIDIA chat relevance assessment.
+- NVIDIA Super VL transcribes scanned PDF pages, PNG/JPEG and document tables. Compare the transcription against each original page and confirm or correct it before analysis. At most six pages per visual import. This is model transcription with human review, not guaranteed OCR accuracy.
+- On-demand NVIDIA Super reasoning produces source-cited conflict and amendment findings. Findings require owner decisions; stale reviews block approval/export. No raw chain-of-thought is displayed or stored.
 
-Validation: 9 standalone tests passed; 11 including development-only starter coverage. Six small fictional live NVIDIA smoke examples passed strict schema, citation and expected-keyword checks. No production accuracy or customer impact is claimed.
+Core features retained: sourced requirements, PDF/DOCX/text imports, approved company evidence, missing-input tasks, amendment review, approval invalidation, DOCX/attachment export, separate submission and receipt evidence.
 
-Public YouTube demo: https://www.youtube.com/watch?v=TGrqRwF3qm0
+Validation: 11 standalone automated tests, including real HTTP/SQLite contracts, plus three live synthetic semantic/vision/reasoning smoke cases and six earlier extraction cases. These are not a production accuracy benchmark or customer impact measurement. See submission/advanced-live-evaluation.json and submission/live-evaluation.json.
 
-The 2:30 narrated walkthrough is also attached as followthrough-demo.mp4. It uses actual application captures and explicitly fictional client/company information.
+Original core-workflow YouTube demo (v0.2): https://www.youtube.com/watch?v=TGrqRwF3qm0
+This video does not show the v0.3 additions. New feature screenshots are included in submission/.
 
-Boundaries: single-owner local application, no OCR or public multi-tenant hosting. Evidence excerpts require human relevance review. Gmail OAuth is optional and unverified. External submission remains manual. Do not expose this app publicly through a tunnel.
+Single-owner local application. No public multi-tenant hosting, legal guarantee, automated external submission, arbitrary spreadsheet ingestion or independently authenticated receipts. Semantic evidence and visual transcriptions require human review. Gmail OAuth is optional and unverified. Do not expose this local app through a public tunnel.
 
-See submission/SUBMISSION.txt for the proposed Devpost entry and docs/ARCHITECTURE.md for limits.
+See README.md for setup and model settings, submission/SUBMISSION.txt for the proposed Devpost entry, and docs/ARCHITECTURE.md for boundaries.

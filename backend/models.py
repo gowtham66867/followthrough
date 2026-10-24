@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from datetime import datetime
 import json
+import math
 import os
 from pathlib import Path
 import time
@@ -60,26 +61,12 @@ class Nebius:
             raise ValueError('Live mode needs NEBIUS_API_KEY in the server environment')
         return key
 
-    def complete(self, prompt_name, payload):
+    def request(self, path, body):
         key = self.key()
-        model = self.config.get('model', '')
-        if not model.lower().startswith('nvidia/'):
-            raise ValueError('Select an available NVIDIA model in config.yaml for live mode')
-        prompt = (Path(__file__).parent / 'prompts' / prompt_name).read_text()
         start = time.monotonic()
-        template_options = {}
-        if 'enable_thinking' in self.config:
-            template_options['chat_template_kwargs'] = {
-                'enable_thinking': self.config['enable_thinking'],
-            }
         with httpx.Client(timeout=self.config.get('request_timeout_seconds', 90)) as client:
             for attempt in range(3):
-                response = client.post(ENDPOINT + '/chat/completions', headers={'Authorization': f'Bearer {key}'}, json={
-                    'model': model, 'max_tokens': 6000,
-                    'response_format': {'type': 'json_object'}, **template_options,
-                    'messages': [{'role': 'system', 'content': prompt},
-                                 {'role': 'user', 'content': json.dumps(payload, ensure_ascii=False)}],
-                })
+                response = client.post(ENDPOINT + path, headers={'Authorization': f'Bearer {key}'}, json=body)
                 if response.status_code not in (429, 500, 502, 503, 504) or attempt == 2:
                     break
                 wait = response.headers.get('retry-after', str(2 ** attempt))
@@ -93,13 +80,45 @@ class Nebius:
         if response.status_code >= 400:
             raise ValueError(f'Nebius returned HTTP {response.status_code}; no fixture fallback was used')
         result = response.json()
+        return result, {'model': body['model'], 'usage': result.get('usage', {}),
+                        'latency_ms': round((time.monotonic() - start) * 1000), 'mode': 'live'}
+
+    def complete(self, prompt_name, payload, *, model=None, thinking=None, max_tokens=6000, images=None):
+        model = model or self.config.get('model', '')
+        if not model.lower().startswith('nvidia/'):
+            raise ValueError('Select an available NVIDIA model in config.yaml for live mode')
+        prompt = (Path(__file__).parent / 'prompts' / prompt_name).read_text()
+        thinking = self.config.get('enable_thinking') if thinking is None else thinking
+        body = {'model': model, 'max_tokens': max_tokens, 'response_format': {'type': 'json_object'}}
+        if thinking is not None:
+            body['chat_template_kwargs'] = {'enable_thinking': thinking}
+        content = json.dumps(payload, ensure_ascii=False)
+        if images:
+            content = [{'type': 'text', 'text': content}] + [
+                {'type': 'image_url', 'image_url': {'url': url}} for url in images]
+        body['messages'] = [{'role': 'system', 'content': prompt}, {'role': 'user', 'content': content}]
+        result, usage = self.request('/chat/completions', body)
         choice = result['choices'][0]
         if choice.get('finish_reason') != 'stop':
             raise ValueError('Incomplete model response; output was not applied')
         content = choice['message']['content']
         parsed = json.loads(content)
-        return parsed, {'model': model, 'usage': result.get('usage', {}),
-                        'latency_ms': round((time.monotonic() - start) * 1000), 'mode': 'live'}
+        return parsed, usage
+
+    def embed(self, texts):
+        model = self.config.get('embedding_model')
+        if not model:
+            raise ValueError('Configure embedding_model before using semantic search')
+        result, usage = self.request('/embeddings', {'model': model, 'input': texts, 'encoding_format': 'float'})
+        rows = result.get('data', [])
+        if len(rows) != len(texts) or sorted(r.get('index', -1) for r in rows) != list(range(len(texts))):
+            raise ValueError('Embedding response did not cover each input exactly once')
+        vectors = [r['embedding'] for r in sorted(rows, key=lambda r: r['index'])]
+        dimensions = len(vectors[0]) if vectors else 0
+        if not dimensions or any(len(v) != dimensions or not all(isinstance(x, (int, float)) and math.isfinite(x) for x in v)
+                                 or not any(v) for v in vectors):
+            raise ValueError('Embedding response contains invalid vectors')
+        return vectors, usage
 
     def extract(self, messages, opportunities):
         opportunities = [{**op, 'id': op['id'].removeprefix('live-')} for op in opportunities]

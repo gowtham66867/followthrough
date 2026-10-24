@@ -44,7 +44,7 @@ def read_document(filename, encoded):
                 for i, page in enumerate(pdf.pages):
                     part = page.extract_text() or ''
                     if not part.strip():
-                        raise ValueError(f'Page {i + 1} is unreadable; OCR is required and is not implemented')
+                        raise ValueError(f'Page {i + 1} is unreadable; choose visual import to transcribe and review it')
                     locations.append({'location': f'Page {i + 1}', 'start': len(text)})
                     text += part + '\n'
                 return text, locations
