@@ -1,0 +1,66 @@
+FollowThrough / five-minute judge walkthrough
+
+1. Start with https://gowtham66867.github.io/followthrough/ for a public,
+   zero-cost browser walkthrough. This is entirely fictional and fixture-based.
+   Review the five answers and deadline, approve, then add the client amendment.
+   Inspect the impact map and the reopened approval. No live inference runs here.
+
+2. For the working NVIDIA/Nebius application, download the v0.5.0 test build:
+   https://github.com/gowtham66867/followthrough/releases/tag/v0.5.0
+   Follow README setup instructions. The ZIP includes the frontend build.
+   The guided demo requires no account. Live inference needs a Nebius credential.
+   No API key is included in source, the ZIP, the public website or this guide.
+
+3. Load the fictional Northstar RFP. In Sources, explicitly choose Analyze with
+   NVIDIA to make a runtime Token Factory call. Compare proposed requirements
+   with the original quotations; confirm their interpretation and deadline.
+   Match approved evidence, review answers, approve the package, and export.
+
+4. Add the fictional amendment. Inspect Before you submit and Impact map.
+   The changed delivery answer needs review, a separate security workbook is
+   required, certification needs an honest disclosure, and the deadline moved.
+   Completing an owner task does not approve an answer. Review the attachment
+   and exact revision before another export. Nothing is submitted externally.
+
+5. Inspect submission/evaluation-v05.json for the retained model prompt's
+   16-case synthetic development evaluation. Raw model and deterministic
+   deadline-guard scores are separate. The rejected prompt experiment is
+   preserved in evaluation-v05-after.json. These are not customer or held-out
+   accuracy measurements. Quote validity does not establish semantic relevance.
+
+Restricted hosted access status
+The invitation gate and persistent inference allowance are implemented and
+tested. A working free host has NOT been identified or deployed. A Nebius
+Token Factory API key provides inference access, not a web hosting server.
+Do not claim judges already have free hosted live access. The downloadable
+build's live mode still requires credentials until that deployment is resolved.
+
+Hosting on an EXISTING free server
+Use a new, dedicated data directory, never a personal/Gmail workspace.
+Copy judge.example.yaml, set its exact HTTPS origin, and use a private JSON
+credential file with NEBIUS_API_KEY and JUDGE_ACCESS_TOKEN (32+ random chars).
+Generate invitation tokens with Python secrets.token_urlsafe(32), keep the
+file mode 0600, and never put credentials into source, CLI arguments or URLs.
+Run:
+  python run_judge.py --config /private/judge.yaml \
+    --credentials /private/judge-secrets.json --data-dir /private/judge-data
+Terminate TLS at the host's trusted reverse proxy; preserve the exact Host and
+Origin. Bind publicly only if the existing server's routing requires it.
+Keep the allowance ledger on persistent storage. An ephemeral host resetting
+the ledger defeats the lifetime ceiling and is unsuitable for this mode.
+
+The sample allowance is 60 lifetime outbound HTTP attempts, including retries
+and failures, with a model allowlist and payload/output limits. It is NOT a
+currency-denominated cap or a promise of zero inference cost. Request limits
+can also interrupt judging; arrange adequate prepaid access or clarify an
+alternative evaluation route with the organizer. Do not publish the owner's
+personal key. No automatic top-up is implemented by the app.
+
+Each server restart revokes sessions; the invitation can start a fresh one.
+The sample access expiry is December 16, 2026 UTC. One invitation serves a
+SHARED fictional workspace, not tenant-isolated customer accounts. Gmail
+routes are disabled. Do not upload confidential client information.
+
+The host must be verified for TLS, authentication, expiry, quota persistence,
+restarts and synthetic live inference before sharing the invitation privately
+through Devpost testing instructions. No new paid resources are authorized.
