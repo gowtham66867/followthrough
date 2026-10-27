@@ -1,0 +1,22 @@
+model: nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B
+timezone: Asia/Kolkata
+enable_thinking: false
+request_timeout_seconds: 90
+embedding_model: Qwen/Qwen3-Embedding-8B
+reranking_model: nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B
+vision_model: nvidia/Nemotron-3.5-Super-VL
+reasoning_model: nvidia/nemotron-3-super-120b-a12b
+judge_access:
+  origin: https://REPLACE-WITH-YOUR-EXISTING-FREE-HOST.example
+  expires_at: '2026-12-16T00:00:00Z'
+provider_budget:
+  expires_at: '2026-12-16T00:00:00Z'
+  # Lifetime across restarts. Every HTTP attempt, including failures/retries, counts.
+  max_requests: 60
+  max_output_tokens: 10000
+  max_request_bytes: 1500000
+  models:
+    - nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B
+    - Qwen/Qwen3-Embedding-8B
+    - nvidia/Nemotron-3.5-Super-VL
+    - nvidia/nemotron-3-super-120b-a12b

@@ -163,7 +163,9 @@ class Proposals:
                 due = analysis.deadline.due_at
                 if due and datetime.fromisoformat(due.replace('Z', '+00:00')).utcoffset() is None:
                     raise ValueError('Deadline needs an explicit timezone')
-                d['deadline'] = {**analysis.deadline.model_dump(), **span, 'source_id': source_id, 'confirmed': False}
+                from .proposal_dates import supported_candidate
+                candidate = supported_candidate(analysis.deadline.quote, due)
+                d['deadline'] = {**analysis.deadline.model_dump(), **span, 'due_at': candidate, 'source_id': source_id, 'confirmed': False}
             source['analyzed'] = True
             source['analysis'] = usage
             return {'source_id': source_id, 'changes': changes, 'model': usage.get('model'), 'usage': usage.get('usage'), 'latency_ms': usage.get('latency_ms')}

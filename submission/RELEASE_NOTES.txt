@@ -16,3 +16,13 @@ Original public 2:30 demo (v0.2 core workflow): https://www.youtube.com/watch?v=
 The video does not show v0.3/v0.4 additions. See submission/12 through 17 screenshots for new features.
 
 Single-owner local application, not public hosting or a multi-tenant service. Links reflect stored associations and model-proposed requirement keys; a person verifies authority, relevance and completeness. No agency pilots, measured savings, production accuracy, legal guarantee or autonomous bid submission are claimed. Optional Gmail OAuth remains unverified.
+
+
+v0.5.0 — judge preparation and measured reliability
+- Invitation-gated shared fictional judge mode with exact HTTPS origin, secure cookies, expiry and disabled Gmail. No host has been deployed.
+- Persistent lifetime provider-attempt ceiling covers every inference path and retries, with model/payload/output limits. This is not a currency cap.
+- Deadline candidates are withheld when cited source text lacks explicit year, time or timezone. Human date review remains necessary.
+- Two transparent 16-case synthetic development runs, including the rejected prompt experiment and remaining failures.
+- Nineteen automated checks passed. Frontend TypeScript/Vite build passed.
+- New five-minute judge guide, public results panel, customer pilot protocol and 2:24 narrated UI-capture video. The old YouTube upload remains labelled v0.2.
+- No customer validation, production-hosting, multi-tenancy, legal-compliance or 9.9/10 claims.

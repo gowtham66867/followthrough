@@ -4,7 +4,7 @@ A local proposal-readiness assistant for small software agencies. It keeps clien
 
 **Hackathon MVP, not a production service.** Built with Nebius Token Factory and `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B`. No customer impact or contract-win claims have been measured.
 
-[Try the free public interactive demo](https://gowtham66867.github.io/followthrough/) · [Watch the original 2:30 core-workflow demo](https://www.youtube.com/watch?v=TGrqRwF3qm0) · [Download the test build](https://github.com/gowtham66867/followthrough/releases/tag/v0.4.0)
+[Try the free public interactive demo](https://gowtham66867.github.io/followthrough/) · [Watch the original 2:30 core-workflow demo](https://www.youtube.com/watch?v=TGrqRwF3qm0) · [Download the test build](https://github.com/gowtham66867/followthrough/releases/tag/v0.5.0)
 
 ![Amendment impact map](submission/16-amendment-impact-map.png)
 
@@ -15,6 +15,26 @@ A proposal owner reconciles an RFP, clarification emails, company case studies a
 ## Free public walkthrough
 
 The [GitHub Pages demo](https://gowtham66867.github.io/followthrough/) runs entirely in the browser with prewritten fictional sources and answers. Review the original package, approve it, add an amendment and inspect reopened obligations. No live AI, credentials, uploads or API calls are included. State resets on refresh. The JSON download is a demo report, not a client proposal. Static source lives in `public-demo/`; this is separate from the full local app below.
+
+## v0.5: judge access and measured failure cases
+
+The [five-minute judge guide](submission/JUDGE_GUIDE.txt) distinguishes the public fictional walkthrough from live NVIDIA inference. Restricted hosting is **implemented but not deployed**: no existing free server has been identified. The local test build still needs a Nebius credential for live mode. Do not present the static Pages site as a live AI service.
+
+An optional `run_judge.py` launcher adds an exact HTTPS origin, invitation token, Secure/HttpOnly cookies, expiry, disabled Gmail routes and a dedicated shared fictional workspace. It requires a persistent provider-attempt ledger. The sample allowance permits 60 lifetime attempts, counting retries and errors, with model, request-size and output-token bounds. This is a request ceiling, **not a dollar cap or zero-cost guarantee**. Keep its state on persistent storage; ephemeral resets defeat the ceiling. See `judge.example.yaml` and the guide. Never reuse a personal workspace or publish credentials. This mode is shared, not multi-tenant.
+
+The application now withholds a model-proposed deadline timestamp when its own source quote lacks explicit year, time or timezone. This checks source precision, not semantic date correctness; confirmation still requires a person.
+
+We ran 16 author-labelled synthetic development cases. The retained prompt passed 12/16 complete cases; 18/20 labelled requirements matched (90% recall), with 18/19 labelled precision (94.7%). All 19 predicted requirement quotations were source-locatable. Applying the application's deadline guard to those same saved outputs yields 14/16 complete cases and 16/16 deadline checks. Remaining errors include a mandatory amendment marked optional and an omitted optional attachment. These are small development-set scores, not independent or production accuracy, and source-locatable quotes are not proof of semantic correctness. Median end-to-end extraction latency was 1,155 ms in this run; reported tokens were 5,749 input and 1,455 output. Actual currency cost was not measured.
+
+A repeated candidate-prompt run increased false positives and was rejected. Both [retained-prompt results](submission/evaluation-v05.json) and [rejected experiment](submission/evaluation-v05-after.json) are published, including outputs and failure cases. No customer pilot has been conducted; [the pilot protocol](submission/PILOT_PROTOCOL.txt) is a study plan, not fabricated evidence.
+
+Repeat the bounded paid development run deliberately:
+
+```sh
+python scripts/evaluate_proposals.py --live --credentials /private/credentials.json --output /private/evaluation.json
+```
+
+The revised narrated UI-capture video is attached to the v0.5 release. It is a montage of actual application captures, not a continuous screen recording. The original public YouTube video still depicts v0.2 until replaced by a new upload.
 
 ## Start the test build
 
@@ -124,7 +144,7 @@ In the Hermes development checkout, use its root `scripts/run_tests.sh` with the
 
 ## Privacy and boundaries
 
-This release is **single-owner and local only**. It binds to loopback, enforces the configured Host/Origin, and requires a local session cookie for API access. It has no multi-tenant authentication and must not be exposed through a public tunnel or internet-facing proxy.
+The default launcher remains **single-owner and local only**. The optional judge launcher described above is a separate restricted shared-demo configuration requiring HTTPS and persistent allowance storage. It binds to loopback, enforces the configured Host/Origin, and requires a local session cookie for API access. It has no multi-tenant authentication and must not be exposed through a public tunnel or internet-facing proxy.
 
 Sources, database and OAuth tokens are protected by filesystem permissions, not encryption at rest. No background telemetry is collected. API keys and provider bodies are not logged. SQLite writes are transactional. Original sources and approval history are preserved.
 
@@ -143,7 +163,7 @@ The original email workspace includes read-only Gmail OAuth. It requires your ow
 - Local matching uses keywords. Optional semantic matching uses embeddings followed by NVIDIA chat relevance assessment; it can still miss evidence or misjudge relevance. Neither similarity nor model relevance is a calibrated confidence score.
 - Requirement omissions, paraphrase errors and unstable model-generated keys remain possible. Human requirement review is essential.
 - Sources are selected and imported by the user; no continuous inbox monitoring.
-- No production hosting, organization isolation or team collaboration.
+- No deployed live judge service, production hosting, organization isolation or team collaboration.
 
 ## Architecture
 

@@ -1,0 +1,879 @@
+{
+  "created_at": "2026-10-27T18:21:12.209422+00:00",
+  "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+  "scope": "Author-labelled synthetic development set. Not customer data, an independent benchmark, a held-out evaluation or production accuracy.",
+  "method": "Same 16 author-labelled development cases rerun after a prompt change. One-to-one unique source phrase matching with punctuation/containment tolerance, flags, selected title quantity terms, stable amendment keys and equivalent timezone-aware timestamps. Raw model and application deadline-guard scores are separate. This is not held out, independent, semantic accuracy, or a controlled improvement claim.",
+  "cost": "Token usage reported below; actual currency cost not measured. Failed attempts and retries may also consume credits. No customer time-saving or ROI measurements.",
+  "summary": {
+    "cases": 16,
+    "passed": 10,
+    "labelled_requirements": 20,
+    "predicted_requirements": 22,
+    "matched_requirements": 18,
+    "labelled_requirement_recall": 0.9,
+    "labelled_requirement_precision": 0.8182,
+    "quote_validity": 1.0,
+    "deadline_cases_correct": 15,
+    "case_failures": [
+      "mandatory_optional",
+      "exact_utc",
+      "ambiguous_date",
+      "missing_zone",
+      "missing_time",
+      "optional_attachment"
+    ],
+    "median_elapsed_ms": 1001.5,
+    "max_elapsed_ms": 2023,
+    "reported_prompt_tokens": 8181,
+    "reported_completion_tokens": 1477
+  },
+  "results": [
+    {
+      "passed": false,
+      "expected": 2,
+      "predicted": 2,
+      "correct": 1,
+      "valid_quotes": 2,
+      "deadline_correct": true,
+      "missed": [
+        "A marketing brochure is optional."
+      ],
+      "failures": [
+        "Unmatched requirement or classification/key error: Marketing brochure"
+      ],
+      "usage": {
+        "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+        "usage": {
+          "completion_tokens": 112,
+          "prompt_tokens": 505,
+          "total_tokens": 617,
+          "completion_tokens_details": null,
+          "prompt_tokens_details": null
+        },
+        "latency_ms": 2022,
+        "mode": "live"
+      },
+      "output": {
+        "requirements": [
+          {
+            "key": "delivery_plan",
+            "title": "Delivery plan",
+            "quote": "You must provide a delivery plan.",
+            "required": true,
+            "attachment": false
+          },
+          {
+            "key": "marketing_brochure",
+            "title": "Marketing brochure",
+            "quote": "A marketing brochure is optional.",
+            "required": false,
+            "attachment": true
+          }
+        ],
+        "deadline": null
+      },
+      "case": "mandatory_optional",
+      "category": "classification",
+      "elapsed_ms": 2023,
+      "application_guard_score": {
+        "passed": false,
+        "expected": 2,
+        "predicted": 2,
+        "correct": 1,
+        "valid_quotes": 2,
+        "deadline_correct": true,
+        "missed": [
+          "A marketing brochure is optional."
+        ],
+        "failures": [
+          "Unmatched requirement or classification/key error: Marketing brochure"
+        ]
+      }
+    },
+    {
+      "passed": true,
+      "expected": 2,
+      "predicted": 2,
+      "correct": 2,
+      "valid_quotes": 2,
+      "deadline_correct": true,
+      "missed": [],
+      "failures": [],
+      "usage": {
+        "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+        "usage": {
+          "completion_tokens": 111,
+          "prompt_tokens": 503,
+          "total_tokens": 614,
+          "completion_tokens_details": null,
+          "prompt_tokens_details": null
+        },
+        "latency_ms": 1010,
+        "mode": "live"
+      },
+      "output": {
+        "requirements": [
+          {
+            "key": "case_studies",
+            "title": "Two case studies",
+            "quote": "Include two relevant case studies.",
+            "required": true,
+            "attachment": false
+          },
+          {
+            "key": "named_contacts",
+            "title": "Three named delivery contacts",
+            "quote": "Provide three named delivery contacts.",
+            "required": true,
+            "attachment": false
+          }
+        ],
+        "deadline": null
+      },
+      "case": "two_studies",
+      "category": "quantity",
+      "elapsed_ms": 1010,
+      "application_guard_score": {
+        "passed": true,
+        "expected": 2,
+        "predicted": 2,
+        "correct": 2,
+        "valid_quotes": 2,
+        "deadline_correct": true,
+        "missed": [],
+        "failures": []
+      }
+    },
+    {
+      "passed": true,
+      "expected": 2,
+      "predicted": 2,
+      "correct": 2,
+      "valid_quotes": 2,
+      "deadline_correct": true,
+      "missed": [],
+      "failures": [],
+      "usage": {
+        "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+        "usage": {
+          "completion_tokens": 112,
+          "prompt_tokens": 506,
+          "total_tokens": 618,
+          "completion_tokens_details": null,
+          "prompt_tokens_details": null
+        },
+        "latency_ms": 1137,
+        "mode": "live"
+      },
+      "output": {
+        "requirements": [
+          {
+            "key": "security_workbook",
+            "title": "Completed security workbook",
+            "quote": "Attach a completed security workbook as a separate file",
+            "required": true,
+            "attachment": true
+          },
+          {
+            "key": "support_approach",
+            "title": "Support approach",
+            "quote": "Describe your support approach.",
+            "required": true,
+            "attachment": false
+          }
+        ],
+        "deadline": null
+      },
+      "case": "separate_file",
+      "category": "attachment",
+      "elapsed_ms": 1137,
+      "application_guard_score": {
+        "passed": true,
+        "expected": 2,
+        "predicted": 2,
+        "correct": 2,
+        "valid_quotes": 2,
+        "deadline_correct": true,
+        "missed": [],
+        "failures": []
+      }
+    },
+    {
+      "passed": true,
+      "expected": 1,
+      "predicted": 1,
+      "correct": 1,
+      "valid_quotes": 1,
+      "deadline_correct": true,
+      "missed": [],
+      "failures": [],
+      "usage": {
+        "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+        "usage": {
+          "completion_tokens": 67,
+          "prompt_tokens": 504,
+          "total_tokens": 571,
+          "completion_tokens_details": null,
+          "prompt_tokens_details": null
+        },
+        "latency_ms": 831,
+        "mode": "live"
+      },
+      "output": {
+        "requirements": [
+          {
+            "key": "inline_answer_description",
+            "title": "Backup policy description",
+            "quote": "Describe your backup policy in the proposal body",
+            "required": true,
+            "attachment": false
+          }
+        ],
+        "deadline": null
+      },
+      "case": "inline_answer",
+      "category": "attachment",
+      "elapsed_ms": 831,
+      "application_guard_score": {
+        "passed": true,
+        "expected": 1,
+        "predicted": 1,
+        "correct": 1,
+        "valid_quotes": 1,
+        "deadline_correct": true,
+        "missed": [],
+        "failures": []
+      }
+    },
+    {
+      "passed": false,
+      "expected": 1,
+      "predicted": 2,
+      "correct": 1,
+      "valid_quotes": 2,
+      "deadline_correct": true,
+      "missed": [],
+      "failures": [
+        "Unmatched requirement or classification/key error: Submission"
+      ],
+      "usage": {
+        "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+        "usage": {
+          "completion_tokens": 132,
+          "prompt_tokens": 517,
+          "total_tokens": 649,
+          "completion_tokens_details": null,
+          "prompt_tokens_details": null
+        },
+        "latency_ms": 1256,
+        "mode": "live"
+      },
+      "output": {
+        "requirements": [
+          {
+            "key": "commercial",
+            "title": "Commercial proposal",
+            "quote": "Provide a commercial proposal.",
+            "required": true,
+            "attachment": false
+          },
+          {
+            "key": "submission",
+            "title": "Submission",
+            "quote": "Submissions close October 30, 2026 at 17:00 UTC.",
+            "required": true,
+            "attachment": false
+          }
+        ],
+        "deadline": {
+          "quote": "Submissions close October 30, 2026 at 17:00 UTC.",
+          "due_at": "2026-10-30T17:00:00Z"
+        }
+      },
+      "case": "exact_utc",
+      "category": "deadline",
+      "elapsed_ms": 1257,
+      "application_guard_score": {
+        "passed": false,
+        "expected": 1,
+        "predicted": 2,
+        "correct": 1,
+        "valid_quotes": 2,
+        "deadline_correct": true,
+        "missed": [],
+        "failures": [
+          "Unmatched requirement or classification/key error: Submission"
+        ]
+      }
+    },
+    {
+      "passed": false,
+      "expected": 1,
+      "predicted": 2,
+      "correct": 1,
+      "valid_quotes": 2,
+      "deadline_correct": true,
+      "missed": [],
+      "failures": [
+        "Unmatched requirement or classification/key error: Submission"
+      ],
+      "usage": {
+        "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+        "usage": {
+          "completion_tokens": 104,
+          "prompt_tokens": 499,
+          "total_tokens": 603,
+          "completion_tokens_details": null,
+          "prompt_tokens_details": null
+        },
+        "latency_ms": 992,
+        "mode": "live"
+      },
+      "output": {
+        "requirements": [
+          {
+            "key": "support_approach",
+            "title": "Support approach",
+            "quote": "Include your support approach.",
+            "required": true,
+            "attachment": false
+          },
+          {
+            "key": "submission",
+            "title": "Submission",
+            "quote": "Send it next Friday.",
+            "required": true,
+            "attachment": false
+          }
+        ],
+        "deadline": null
+      },
+      "case": "ambiguous_date",
+      "category": "deadline",
+      "elapsed_ms": 993,
+      "application_guard_score": {
+        "passed": false,
+        "expected": 1,
+        "predicted": 2,
+        "correct": 1,
+        "valid_quotes": 2,
+        "deadline_correct": true,
+        "missed": [],
+        "failures": [
+          "Unmatched requirement or classification/key error: Submission"
+        ]
+      }
+    },
+    {
+      "passed": false,
+      "expected": 1,
+      "predicted": 1,
+      "correct": 1,
+      "valid_quotes": 1,
+      "deadline_correct": false,
+      "missed": [],
+      "failures": [
+        "Deadline missing, invented, incorrectly resolved or not uniquely cited"
+      ],
+      "usage": {
+        "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+        "usage": {
+          "completion_tokens": 112,
+          "prompt_tokens": 513,
+          "total_tokens": 625,
+          "completion_tokens_details": null,
+          "prompt_tokens_details": null
+        },
+        "latency_ms": 1022,
+        "mode": "live"
+      },
+      "output": {
+        "requirements": [
+          {
+            "key": "delivery_plan",
+            "title": "Delivery plan",
+            "quote": "Include a delivery plan.",
+            "required": true,
+            "attachment": false
+          }
+        ],
+        "deadline": {
+          "quote": "Submit October 29, 2026 at 17:00.",
+          "due_at": "2026-10-29T17:00:00Z"
+        }
+      },
+      "case": "missing_zone",
+      "category": "deadline",
+      "elapsed_ms": 1022,
+      "application_guard_score": {
+        "passed": true,
+        "expected": 1,
+        "predicted": 1,
+        "correct": 1,
+        "valid_quotes": 1,
+        "deadline_correct": true,
+        "missed": [],
+        "failures": []
+      }
+    },
+    {
+      "passed": false,
+      "expected": 1,
+      "predicted": 2,
+      "correct": 1,
+      "valid_quotes": 2,
+      "deadline_correct": true,
+      "missed": [],
+      "failures": [
+        "Unmatched requirement or classification/key error: Submission deadline"
+      ],
+      "usage": {
+        "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+        "usage": {
+          "completion_tokens": 119,
+          "prompt_tokens": 508,
+          "total_tokens": 627,
+          "completion_tokens_details": null,
+          "prompt_tokens_details": null
+        },
+        "latency_ms": 1062,
+        "mode": "live"
+      },
+      "output": {
+        "requirements": [
+          {
+            "key": "technical_approach",
+            "title": "Technical approach",
+            "quote": "Provide a technical approach.",
+            "required": true,
+            "attachment": false
+          },
+          {
+            "key": "deadline",
+            "title": "Submission deadline",
+            "quote": "Proposals are due October 29, 2026.",
+            "required": false,
+            "attachment": false
+          }
+        ],
+        "deadline": null
+      },
+      "case": "missing_time",
+      "category": "deadline",
+      "elapsed_ms": 1063,
+      "application_guard_score": {
+        "passed": false,
+        "expected": 1,
+        "predicted": 2,
+        "correct": 1,
+        "valid_quotes": 2,
+        "deadline_correct": true,
+        "missed": [],
+        "failures": [
+          "Unmatched requirement or classification/key error: Submission deadline"
+        ]
+      }
+    },
+    {
+      "passed": true,
+      "expected": 1,
+      "predicted": 1,
+      "correct": 1,
+      "valid_quotes": 1,
+      "deadline_correct": true,
+      "missed": [],
+      "failures": [],
+      "usage": {
+        "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+        "usage": {
+          "completion_tokens": 75,
+          "prompt_tokens": 520,
+          "total_tokens": 595,
+          "completion_tokens_details": null,
+          "prompt_tokens_details": null
+        },
+        "latency_ms": 984,
+        "mode": "live"
+      },
+      "output": {
+        "requirements": [
+          {
+            "key": "delivery_plan",
+            "title": "Revised delivery plan with four week discovery phase",
+            "quote": "Provide a revised delivery plan with a four week discovery phase.",
+            "required": true,
+            "attachment": false
+          }
+        ],
+        "deadline": null
+      },
+      "case": "amended_key",
+      "category": "amendment",
+      "elapsed_ms": 985,
+      "application_guard_score": {
+        "passed": true,
+        "expected": 1,
+        "predicted": 1,
+        "correct": 1,
+        "valid_quotes": 1,
+        "deadline_correct": true,
+        "missed": [],
+        "failures": []
+      }
+    },
+    {
+      "passed": true,
+      "expected": 1,
+      "predicted": 1,
+      "correct": 1,
+      "valid_quotes": 1,
+      "deadline_correct": true,
+      "missed": [],
+      "failures": [],
+      "usage": {
+        "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+        "usage": {
+          "completion_tokens": 67,
+          "prompt_tokens": 518,
+          "total_tokens": 585,
+          "completion_tokens_details": null,
+          "prompt_tokens_details": null
+        },
+        "latency_ms": 871,
+        "mode": "live"
+      },
+      "output": {
+        "requirements": [
+          {
+            "key": "security_response",
+            "title": "Security response",
+            "quote": "The security response must now be attached as a separate file.",
+            "required": true,
+            "attachment": true
+          }
+        ],
+        "deadline": null
+      },
+      "case": "amended_attachment",
+      "category": "amendment",
+      "elapsed_ms": 872,
+      "application_guard_score": {
+        "passed": true,
+        "expected": 1,
+        "predicted": 1,
+        "correct": 1,
+        "valid_quotes": 1,
+        "deadline_correct": true,
+        "missed": [],
+        "failures": []
+      }
+    },
+    {
+      "passed": true,
+      "expected": 1,
+      "predicted": 1,
+      "correct": 1,
+      "valid_quotes": 1,
+      "deadline_correct": true,
+      "missed": [],
+      "failures": [],
+      "usage": {
+        "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+        "usage": {
+          "completion_tokens": 64,
+          "prompt_tokens": 511,
+          "total_tokens": 575,
+          "completion_tokens_details": null,
+          "prompt_tokens_details": null
+        },
+        "latency_ms": 874,
+        "mode": "live"
+      },
+      "output": {
+        "requirements": [
+          {
+            "key": "technical_architecture",
+            "title": "Technical architecture",
+            "quote": "Provide a technical architecture.",
+            "required": true,
+            "attachment": false
+          }
+        ],
+        "deadline": null
+      },
+      "case": "injection",
+      "category": "untrusted_source",
+      "elapsed_ms": 874,
+      "application_guard_score": {
+        "passed": true,
+        "expected": 1,
+        "predicted": 1,
+        "correct": 1,
+        "valid_quotes": 1,
+        "deadline_correct": true,
+        "missed": [],
+        "failures": []
+      }
+    },
+    {
+      "passed": true,
+      "expected": 1,
+      "predicted": 1,
+      "correct": 1,
+      "valid_quotes": 1,
+      "deadline_correct": true,
+      "missed": [],
+      "failures": [],
+      "usage": {
+        "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+        "usage": {
+          "completion_tokens": 85,
+          "prompt_tokens": 514,
+          "total_tokens": 599,
+          "completion_tokens_details": null,
+          "prompt_tokens_details": null
+        },
+        "latency_ms": 928,
+        "mode": "live"
+      },
+      "output": {
+        "requirements": [
+          {
+            "key": "iso_27001_certification",
+            "title": "ISO 27001 certification status",
+            "quote": "Clarify whether you hold ISO 27001 certification.",
+            "required": true,
+            "attachment": false
+          }
+        ],
+        "deadline": null
+      },
+      "case": "no_supplier_claim",
+      "category": "evidence_boundary",
+      "elapsed_ms": 929,
+      "application_guard_score": {
+        "passed": true,
+        "expected": 1,
+        "predicted": 1,
+        "correct": 1,
+        "valid_quotes": 1,
+        "deadline_correct": true,
+        "missed": [],
+        "failures": []
+      }
+    },
+    {
+      "passed": true,
+      "expected": 0,
+      "predicted": 0,
+      "correct": 0,
+      "valid_quotes": 0,
+      "deadline_correct": true,
+      "missed": [],
+      "failures": [],
+      "usage": {
+        "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+        "usage": {
+          "completion_tokens": 16,
+          "prompt_tokens": 507,
+          "total_tokens": 523,
+          "completion_tokens_details": null,
+          "prompt_tokens_details": null
+        },
+        "latency_ms": 851,
+        "mode": "live"
+      },
+      "output": {
+        "requirements": [],
+        "deadline": null
+      },
+      "case": "empty_obligations",
+      "category": "negative",
+      "elapsed_ms": 851,
+      "application_guard_score": {
+        "passed": true,
+        "expected": 0,
+        "predicted": 0,
+        "correct": 0,
+        "valid_quotes": 0,
+        "deadline_correct": true,
+        "missed": [],
+        "failures": []
+      }
+    },
+    {
+      "passed": false,
+      "expected": 2,
+      "predicted": 1,
+      "correct": 1,
+      "valid_quotes": 1,
+      "deadline_correct": true,
+      "missed": [
+        "An optional architecture diagram may be attached as a separate file."
+      ],
+      "failures": [],
+      "usage": {
+        "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+        "usage": {
+          "completion_tokens": 63,
+          "prompt_tokens": 506,
+          "total_tokens": 569,
+          "completion_tokens_details": null,
+          "prompt_tokens_details": null
+        },
+        "latency_ms": 895,
+        "mode": "live"
+      },
+      "output": {
+        "requirements": [
+          {
+            "key": "commercial_response",
+            "title": "Commercial response",
+            "quote": "Provide a commercial response",
+            "required": true,
+            "attachment": false
+          }
+        ],
+        "deadline": null
+      },
+      "case": "optional_attachment",
+      "category": "classification",
+      "elapsed_ms": 895,
+      "application_guard_score": {
+        "passed": false,
+        "expected": 2,
+        "predicted": 1,
+        "correct": 1,
+        "valid_quotes": 1,
+        "deadline_correct": true,
+        "missed": [
+          "An optional architecture diagram may be attached as a separate file."
+        ],
+        "failures": []
+      }
+    },
+    {
+      "passed": true,
+      "expected": 1,
+      "predicted": 1,
+      "correct": 1,
+      "valid_quotes": 1,
+      "deadline_correct": true,
+      "missed": [],
+      "failures": [],
+      "usage": {
+        "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+        "usage": {
+          "completion_tokens": 122,
+          "prompt_tokens": 541,
+          "total_tokens": 663,
+          "completion_tokens_details": null,
+          "prompt_tokens_details": null
+        },
+        "latency_ms": 1090,
+        "mode": "live"
+      },
+      "output": {
+        "requirements": [
+          {
+            "key": "commercial_proposal",
+            "title": "Commercial proposal",
+            "quote": "Provide a revised commercial proposal.",
+            "required": true,
+            "attachment": false
+          }
+        ],
+        "deadline": {
+          "quote": "October 28, 2026 at 15:00 UTC",
+          "due_at": "2026-10-28T15:00:00+00:00"
+        }
+      },
+      "case": "moved_deadline",
+      "category": "amendment",
+      "elapsed_ms": 1091,
+      "application_guard_score": {
+        "passed": true,
+        "expected": 1,
+        "predicted": 1,
+        "correct": 1,
+        "valid_quotes": 1,
+        "deadline_correct": true,
+        "missed": [],
+        "failures": []
+      }
+    },
+    {
+      "passed": true,
+      "expected": 2,
+      "predicted": 2,
+      "correct": 2,
+      "valid_quotes": 2,
+      "deadline_correct": true,
+      "missed": [],
+      "failures": [],
+      "usage": {
+        "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+        "usage": {
+          "completion_tokens": 116,
+          "prompt_tokens": 509,
+          "total_tokens": 625,
+          "completion_tokens_details": null,
+          "prompt_tokens_details": null
+        },
+        "latency_ms": 1966,
+        "mode": "live"
+      },
+      "output": {
+        "requirements": [
+          {
+            "key": "delivery_plan_discovery",
+            "title": "Delivery plan for discovery",
+            "quote": "provide a delivery plan for discovery",
+            "required": true,
+            "attachment": false
+          },
+          {
+            "key": "delivery_plan_implementation",
+            "title": "Delivery plan for implementation",
+            "quote": "provide a delivery plan for implementation",
+            "required": true,
+            "attachment": false
+          }
+        ],
+        "deadline": null
+      },
+      "case": "unique_quote",
+      "category": "quote_ambiguity",
+      "elapsed_ms": 1967,
+      "application_guard_score": {
+        "passed": true,
+        "expected": 2,
+        "predicted": 2,
+        "correct": 2,
+        "valid_quotes": 2,
+        "deadline_correct": true,
+        "missed": [],
+        "failures": []
+      }
+    }
+  ],
+  "guarded_summary": {
+    "cases": 16,
+    "passed": 11,
+    "labelled_requirements": 20,
+    "predicted_requirements": 22,
+    "matched_requirements": 18,
+    "labelled_requirement_recall": 0.9,
+    "labelled_requirement_precision": 0.8182,
+    "quote_validity": 1.0,
+    "deadline_cases_correct": 16,
+    "case_failures": [
+      "mandatory_optional",
+      "exact_utc",
+      "ambiguous_date",
+      "missing_time",
+      "optional_attachment"
+    ]
+  },
+  "decision": "Rejected prompt experiment, not shipping. Original prompt retained because this candidate produced more unmatched requirements. This repeat must not be presented as an independent evaluation."
+}

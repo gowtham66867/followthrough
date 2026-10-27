@@ -41,3 +41,14 @@ Automated tests use real API requests, real SQLite, restart persistence, documen
 `proposal_readiness.py` derives structured issues and dependency rows from persisted proposal state. `proposals.blockers()` consumes the same blocking issues that populate the final review, and approval, export and user-reported submission enforce them. A stored approval hash alone cannot bypass expired evidence or outstanding reviews. Projections are read-only; they are not persisted inside the package document or included recursively in approval hashing. Exported internal review JSON includes the evaluated readiness and impact snapshots.
 
 Dependency edges use existing source IDs, requirement keys, selected evidence IDs, attachment associations and task keys. No new model call infers these edges. Historical before/after text comes from the stored previous requirement version and preserved sources. A requirement-key mismatch can still omit or misassociate an amendment change; the UI explicitly requires human review. Pending unanalyzed amendments are identified separately. Advisory owner assignments and exceptions are distinct from blocking obligations.
+
+
+## Restricted judge configuration (v0.5)
+
+The default loopback boundary remains unchanged. `run_judge.py` constructs a separate workspace with an exact HTTPS origin and invitation gate in `backend/judge_access.py`. Every private route, including assets, requires the gate before the existing process-local API session. Cookies are Secure/HttpOnly; sessions revoke on restart, invitations expire, and Gmail routes are disabled. This is one shared fictional workspace, not tenant isolation. No live host is deployed.
+
+`backend/provider_budget.py` reserves each outbound HTTP attempt in a SQLite transaction before sending, including retry attempts. The lifetime ledger survives server restarts only when its data directory persists. It has an allowlist, expiry, output and request-size bounds. The ceiling does not represent currency cost; no automatic top-up or public unrestricted inference is offered.
+
+`backend/proposal_dates.py` withholds a proposed date when the cited quote lacks explicit year, time or timezone. This avoids accepting guessed precision while preserving the original quote and human deadline review. It does not prove that a complete-looking source was interpreted correctly.
+
+The evaluation scorer matches author-labelled synthetic obligations one-to-one and separates source quotation validity, label agreement and deadline checks. Raw outputs and guarded scores are both retained; repeated development examples are not held-out validation.

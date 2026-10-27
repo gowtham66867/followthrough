@@ -38,7 +38,7 @@ Repository
 https://github.com/gowtham66867/followthrough
 
 Test build
-https://github.com/gowtham66867/followthrough/releases/tag/v0.4.0
+https://github.com/gowtham66867/followthrough/releases/tag/v0.5.0
 
 Public YouTube demo URL
 https://www.youtube.com/watch?v=TGrqRwF3qm0
@@ -48,3 +48,20 @@ Semantic search uses Qwen/Qwen3-Embedding-8B to shortlist approved evidence and 
 
 Version 0.4 additions
 A source-to-approval impact map shows original and amended requirements, selected evidence, answer review, attachments and missing-input owners. The default Before you submit screen groups actionable blockers and advisory follow-ups. The same readiness contract controls the screen, approval, export and user-reported submission; expired evidence can reopen readiness even without a content change. All added map edges are derived from stored associations, not an inferred claim of completeness. Customer pilots, comparative review-time measurement and a broader labelled evaluation remain outstanding.
+
+
+Version 0.5 / judge and reliability improvements
+An optional invitation-gated judge launcher now requires one HTTPS origin, Secure/HttpOnly cookies, an expiry and a persistent provider-attempt ceiling. Gmail is disabled in that shared fictional workspace. This is implemented and tested, not deployed: no existing free server has been identified. The public Pages site remains a zero-inference-cost fictional walkthrough. Do not describe it as a live model service.
+
+The deadline guard keeps guessed source precision unresolved. A retained-prompt run on 16 author-labelled synthetic development cases passed 12 raw complete cases, with 18/20 labelled requirement recall, 18/19 labelled precision, and 19/19 source-locatable requirement quotations. Applying the deterministic deadline guard to those saved outputs passed 14/16 complete cases and 16/16 deadline checks. Quote validity is not semantic accuracy. Two extraction failures remain. A repeated candidate prompt increased false positives and was rejected; both runs are public. These are development results, not an independent benchmark or customer outcome evidence.
+
+Nineteen standalone automated checks passed, including HTTPS invitation/session/expiry checks and real HTTP retry accounting against a persistent SQLite allowance. A 2:24 narrated montage of actual UI captures is attached to the v0.5 release. A new YouTube upload is not complete: the currently signed-in Workspace account is ineligible to use YouTube. The original YouTube URL still shows v0.2.
+
+Public walkthrough
+https://gowtham66867.github.io/followthrough/
+
+Judge guide
+https://github.com/gowtham66867/followthrough/blob/codex/submission/submission/JUDGE_GUIDE.txt
+
+Submission status
+Not submitted. Free hosted live judge access and the new YouTube upload remain unresolved. The pilot protocol is a study plan only; no customer interviews or measurements have been invented.

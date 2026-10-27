@@ -1,0 +1,38 @@
+FollowThrough / permissioned proposal-owner pilot
+Status: study plan only. No interviews, customers or ROI results collected.
+
+Recruit 3-5 people responsible for agency proposals. Obtain their permission
+to observe the session and separately obtain permission before sending any
+real source material to Nebius. Prefer a sanitized brief. Never recruit or
+email participants automatically from this repository.
+
+Give each participant a brief, an evidence pack and a later amendment. Use two
+comparable fictional packs and alternate the order of manual and assisted
+review to reduce practice effects. Do not reuse the model development examples
+as an independent evaluation set. Have a second human label obligations,
+amendment effects and acceptable evidence before the session.
+
+Record, for both manual and assisted review:
+- Elapsed time from opening the brief to the participant's final reviewed pack.
+- Mandatory obligations missed, unsupported claims, missing attachments and
+  incorrect deadlines, checked against the independent labels.
+- Amendment effects identified, false alarms and residual mistakes at export.
+- Number of interventions, clarification questions and accepted exceptions.
+- Model token usage, failures and provider latency, plus actual invoiced cost
+  if available. Do not call token estimates actual currency expenditure.
+- Whether the participant could explain why approval was blocked/reopened.
+
+Ask: What would stop you using this on your next proposal? Which finding was
+useful, misleading or missing? Would this change a real review decision?
+Ask for the participant's normal workflow before introducing feature ideas.
+
+Publish every participant's paired measurements anonymously only with consent.
+Report median and range as exploratory results with this small sample. Do not
+extrapolate to contract wins, revenue, legal compliance or production accuracy.
+Record limitations and negative findings alongside benefits.
+
+Worksheet columns:
+participant_alias, consent_recorded, scenario, method, order, minutes,
+mandatory_missed, unsupported_claims, attachments_missing, deadline_errors,
+amendments_missed, false_alarms, model_failures, provider_ms, input_tokens,
+output_tokens, actual_cost_if_available, clarification_count, qualitative_notes

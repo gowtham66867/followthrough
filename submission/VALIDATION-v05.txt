@@ -1,0 +1,8 @@
+Validation recorded October 27, 2026
+19 standalone checks passed via the Hermes root scripts/run_tests.sh, with isolated homes and credentials unset.
+After the final judge-body length change, both judge tests passed again.
+Frontend TypeScript/Vite production build passed.
+A current browser source analysis completed with nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B on fictional Northstar data.
+16-case original-prompt and candidate-prompt development evaluations are published separately, with failures. The original prompt is retained. No broad quality claim.
+The new video is a narrated montage of actual UI captures, not a continuous recording. Duration is checked with ffprobe.
+No free live host is identified. No customer pilot was run. No Devpost submission was made.

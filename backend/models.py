@@ -66,6 +66,8 @@ class Nebius:
         start = time.monotonic()
         with httpx.Client(timeout=self.config.get('request_timeout_seconds', 90)) as client:
             for attempt in range(3):
+                from .provider_budget import reserve
+                reserve(self.config, body)
                 response = client.post(ENDPOINT + path, headers={'Authorization': f'Bearer {key}'}, json=body)
                 if response.status_code not in (429, 500, 502, 503, 504) or attempt == 2:
                     break

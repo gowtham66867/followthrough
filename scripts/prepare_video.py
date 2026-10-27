@@ -1,0 +1,23 @@
+"""Create a narrated walkthrough from actual browser QA captures; no simulated UI."""
+from pathlib import Path
+import json
+import subprocess
+
+BASE=Path(__file__).resolve().parents[1]
+OUT=BASE/'build/video';OUT.mkdir(parents=True,exist_ok=True)
+SCENES=[('18-v05-final-review.png', 'A costly proposal gap', 'Small agencies reconcile client briefs, company evidence and late amendments manually. FollowThrough keeps each obligation connected to its source and blocks an outdated package. These are actual application captures with synthetic narration and clearly fictional client data, not customer results.'), ('19-v05-live-source.png', 'Real NVIDIA on Nebius', 'This source view shows a real NVIDIA Nemotron three Nano analysis on Nebius Token Factory. The model proposes requirements. Code anchors exact quotations. A person confirms the meaning and deadline. Live failures never switch to fictional success. The separate free website uses prewritten fixtures and is labelled accordingly.'), ('13-semantic-evidence.png', 'Evidence before promises', 'The full app can shortlist approved company evidence with Qwen embeddings and assess relevance with NVIDIA Nano. Suggestions do not overwrite reviewed answers. A similarity score is not calibrated confidence. People still decide whether the evidence supports the promise.'), ('15-final-review-approved.png', 'Approval belongs to a revision', 'Before you submit groups requirements, answers, evidence, attachments, deadlines and optional conflict findings. Approval binds an exact revision and content hash. A task marked done does not approve an answer. A clear requirement row does not approve the package.'), ('16-amendment-impact-map.png', 'The amendment moment', 'The fictional client changes discovery, adds a separate security workbook and asks about certification. The impact map traces the source through evidence, answers and owners. Prior approval reopens. The owner can see what changed and what must be reviewed again.'), ('17-final-review-blocked.png', 'Fix the package, not the score', 'The new workbook and truthful certification response need review. Unsupported claims cannot silently pass. The corrected export contains the client Word proposal, separate internal review material and attachments. Export is not external submission or a contract award.'), ('18-v05-final-review.png', 'Evidence and honest limits', 'Nineteen automated checks passed. In sixteen author labelled synthetic cases, the retained model prompt passed twelve complete cases. A new deterministic deadline precision guard increased that to fourteen, by keeping guessed times and timezones unresolved. Two extraction failures remain. This is development evidence, not production accuracy or customer return on investment.'), ('14-conflict-review.png', 'A reviewable next step', 'Restricted judge access now has an invitation gate, expiry and a persistent request ceiling, but free live hosting is still unresolved. The source, runnable build, evaluation failures and five minute judge guide are public. FollowThrough aims to make a human proposal review inspectable, with evidence beside every decision.')]
+concat=[];timing=[]
+for i,(frame,title,text) in enumerate(SCENES):
+ speech=OUT/f'{i}.txt';speech.write_text(text)
+ audio=OUT/f'{i}.aiff'
+ subprocess.run(['/usr/bin/say','-v','Samantha','-r','175','-f',str(speech),'-o',str(audio)],check=True)
+ duration=float(subprocess.check_output(['/opt/homebrew/bin/ffprobe','-v','error','-show_entries','format=duration','-of','default=noprint_wrappers=1:nokey=1',str(audio)],text=True))+.5
+ segment=OUT/f'{i}.mp4'
+ view_filter=('crop=iw:1000:0:ih-1000,' if frame in {'14-conflict-review.png','15-final-review-approved.png','16-amendment-impact-map.png','17-final-review-blocked.png'} else '')
+ subprocess.run(['/opt/homebrew/bin/ffmpeg','-y','-loglevel','error','-loop','1','-framerate','10','-i',str(BASE/'submission'/frame),'-i',str(audio),'-vf',view_filter+'scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:color=0xf3f5f0,format=yuv420p','-t',str(duration),'-c:v','libx264','-preset','fast','-crf','22','-r','30','-c:a','aac','-b:a','128k',str(segment)],check=True)
+ concat.append("file '"+str(segment)+"'");timing.append({'title':title,'seconds':duration,'narration':text})
+ print(title,round(duration,1),flush=True)
+(OUT/'concat.txt').write_text('\n'.join(concat))
+subprocess.run(['/opt/homebrew/bin/ffmpeg','-y','-loglevel','error','-f','concat','-safe','0','-i',str(OUT/'concat.txt'),'-c','copy','-movflags','+faststart',str(BASE/'submission/followthrough-demo-v05.mp4')],check=True)
+(BASE/'submission/video-chapters-v05.json').write_text(json.dumps(timing,indent=2)+'\n')
+print('Total seconds:',sum(t['seconds'] for t in timing))

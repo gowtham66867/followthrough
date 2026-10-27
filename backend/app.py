@@ -44,6 +44,13 @@ def create_app(directory: Path, config=None, port=8787):
     session = secrets.token_urlsafe(40)
     origins = {f'http://127.0.0.1:{port}', f'http://localhost:{port}'}
     hosts = {f'127.0.0.1:{port}', f'localhost:{port}'}
+    judge = None
+    if config.get('judge_access'):
+        if not config.get('provider_budget'):
+            raise ValueError('Judge mode requires a persistent inference allowance')
+        from .judge_access import JudgeAccess
+        judge = JudgeAccess(config['judge_access'])
+        hosts, origins = {judge.host}, {judge.origin}
     dist = Path(__file__).parents[1] / 'frontend/dist'
 
     @asynccontextmanager
@@ -52,7 +59,7 @@ def create_app(directory: Path, config=None, port=8787):
         yield
         jobs.stop()
 
-    app = FastAPI(title='FollowThrough', version='0.4.0', lifespan=lifespan,
+    app = FastAPI(title='FollowThrough', version='0.5.0', lifespan=lifespan,
                   docs_url=None, redoc_url=None, openapi_url=None)
     app.state.store, app.state.jobs, app.state.config = store, jobs, config
     from .proposal_routes import router as proposal_router
@@ -65,6 +72,14 @@ def create_app(directory: Path, config=None, port=8787):
         origin = request.headers.get('origin')
         if origin and origin not in origins:
             return JSONResponse({'error': 'Cross-origin access is not allowed'}, status_code=403)
+        if judge:
+            gate = await judge.handle(request)
+            if gate is not None:
+                gate.headers['Cache-Control'] = 'no-store'
+                gate.headers['X-Content-Type-Options'] = 'nosniff'
+                gate.headers['X-Frame-Options'] = 'DENY'
+                gate.headers['Content-Security-Policy'] = "default-src 'none'; style-src 'unsafe-inline'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'"
+                return gate
         if request.url.path.startswith('/api/') and request.cookies.get('followthrough_session') != session:
             return JSONResponse({'error': 'Open the local workspace to start a session'}, status_code=401)
         if request.headers.get('content-length', '0').isdigit() and int(request.headers.get('content-length', '0')) > 5_000_000:
@@ -96,13 +111,13 @@ def create_app(directory: Path, config=None, port=8787):
 
     @app.get('/health')
     def health():
-        return {'status': 'ok', 'application': 'FollowThrough', 'deployment': 'local single-owner workspace'}
+        return {'status': 'ok', 'application': 'FollowThrough', 'deployment': 'restricted shared judge demo' if judge else 'local single-owner workspace'}
 
     @app.get('/api/settings')
     def settings():
         return {'timezone': config['timezone'], 'model': config['model'],
                 'nebius_key_configured': bool(os.environ.get('NEBIUS_API_KEY') or os.environ.get('NEBIUS_TOKEN_FACTORY_API_KEY')),
-                'gmail': gmail.status(), 'deployment': 'Local only · single owner',
+                'gmail': gmail.status(), 'deployment': 'Restricted shared judge demo · fictional data only' if judge else 'Local only · single owner',
                 'data_policy': 'Selected live emails are sent to Nebius. Local history and OAuth tokens are not encrypted at rest.'}
 
     @app.get('/api/snapshot')
@@ -299,7 +314,7 @@ def create_app(directory: Path, config=None, port=8787):
             response = JSONResponse({'error': 'Build the frontend first: npm --prefix followthrough/frontend run build'}, status_code=503)
         else:
             response = FileResponse(dist / 'index.html')
-        response.set_cookie('followthrough_session', session, httponly=True, samesite='lax', max_age=86400)
+        response.set_cookie('followthrough_session', session, httponly=True, secure=bool(judge), samesite='lax', max_age=86400)
         return response
 
     if dist.exists():
