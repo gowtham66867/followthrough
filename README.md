@@ -4,7 +4,7 @@ A local proposal-readiness assistant for small software agencies. It keeps clien
 
 **Hackathon MVP, not a production service.** Built with Nebius Token Factory and `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B`. No customer impact or contract-win claims have been measured.
 
-[Try the free public interactive demo](https://gowtham66867.github.io/followthrough/) · [Watch the original 2:30 core-workflow demo](https://www.youtube.com/watch?v=TGrqRwF3qm0) · [Download the test build](https://github.com/gowtham66867/followthrough/releases/tag/v0.5.0)
+[Try the free public interactive demo](https://gowtham66867.github.io/followthrough/) · [Watch the updated 2:24 v0.5 demo](https://www.youtube.com/watch?v=wf7quo_NmPw) · [Download the test build](https://github.com/gowtham66867/followthrough/releases/tag/v0.5.0)
 
 ![Amendment impact map](submission/16-amendment-impact-map.png)
 
@@ -34,7 +34,7 @@ Repeat the bounded paid development run deliberately:
 python scripts/evaluate_proposals.py --live --credentials /private/credentials.json --output /private/evaluation.json
 ```
 
-The revised narrated UI-capture video is attached to the v0.5 release. It is a montage of actual application captures, not a continuous screen recording. The original public YouTube video still depicts v0.2 until replaced by a new upload.
+The revised narrated UI-capture video is attached to the v0.5 release. It is a montage of actual application captures, not a continuous screen recording. The updated v0.5 video is now public at https://www.youtube.com/watch?v=wf7quo_NmPw. It uses synthetic narration over actual application captures.
 
 ## Start the test build
 

@@ -65,3 +65,9 @@ https://github.com/gowtham66867/followthrough/blob/codex/submission/submission/J
 
 Submission status
 Not submitted. Free hosted live judge access and the new YouTube upload remain unresolved. The pilot protocol is a study plan only; no customer interviews or measurements have been invented.
+
+
+October 30 publication update
+Updated v0.5 YouTube video is public: https://www.youtube.com/watch?v=wf7quo_NmPw
+Devpost project: https://devpost.com/software/followthrough-qp2413
+The entry is prepared in Best Apps and Agents. Final terms acceptance/submission is awaiting explicit action-time approval. The hosted live-access limitation is disclosed.
